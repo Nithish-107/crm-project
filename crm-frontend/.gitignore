@@ -17,6 +17,10 @@ dist-ssr
 crm-backend/target/
 *.class
 
+# Java crash logs
+hs_err_pid*
+replay_pid*
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
