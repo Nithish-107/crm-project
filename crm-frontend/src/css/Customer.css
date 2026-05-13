@@ -1,0 +1,137 @@
+.customers-container {
+
+    padding: 20px;
+}
+
+.customer-form {
+
+    display: grid;
+    grid-template-columns: repeat(2, 250px);
+    gap: 15px;
+
+    margin-bottom: 30px;
+}
+
+.customer-form input {
+
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.customer-form button {
+
+    width: 150px;
+
+    padding: 10px;
+
+    border: none;
+    background: #4a90e2;
+    color: white;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+}
+
+.search-box {
+
+    margin-bottom: 20px;
+}
+
+.search-box input {
+
+    padding: 10px;
+    width: 250px;
+
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.search-box button {
+
+    padding: 10px 15px;
+    margin-left: 10px;
+
+    border: none;
+    background: #333;
+    color: white;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+}
+
+.customer-table {
+
+    width: 100%;
+    border-collapse: collapse;
+
+    background: white;
+}
+
+.customer-table th,
+.customer-table td {
+
+    border: 1px solid #ddd;
+
+    padding: 12px;
+
+    text-align: left;
+}
+
+.customer-table th {
+
+    background: #4a90e2;
+    color: white;
+}
+
+.edit-btn {
+
+    background: orange;
+    color: white;
+
+    border: none;
+
+    padding: 8px 12px;
+
+    margin-right: 10px;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+}
+
+.delete-btn {
+
+    background: crimson;
+    color: white;
+
+    border: none;
+
+    padding: 8px 12px;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+}
+
+.pagination {
+
+    margin-top: 20px;
+}
+
+.pagination button {
+
+    padding: 10px 15px;
+
+    margin-right: 10px;
+
+    border: none;
+    background: #333;
+    color: white;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+}
