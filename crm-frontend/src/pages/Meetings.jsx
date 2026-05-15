@@ -14,7 +14,7 @@ function Meetings() {
     title: "",
     meetingDate: "",
     meetingTime: "",
-    participants: "",
+    emails: "",
     location: ""
   });
 
@@ -60,7 +60,7 @@ function Meetings() {
     !formData.title ||
     !formData.meetingDate ||
     !formData.meetingTime ||
-    !formData.participants ||
+    !formData.emails ||
     !formData.location
   ) {
 
@@ -82,12 +82,16 @@ function Meetings() {
 
       } else {
 
-        await axios.post(
+          const response = await axios.post(
+  "http://localhost:8080/meetings",
+  formData
+);
 
-          "http://localhost:8080/meetings",
+setMeetings([
+  ...meetings,
+  response.data
+]);
 
-          formData
-        );
       }
 
       await fetchMeetings();
@@ -98,7 +102,7 @@ function Meetings() {
         title: "",
         meetingDate: "",
         meetingTime: "",
-        participants: "",
+        emails: "",
         location: ""
       });
 
@@ -132,7 +136,7 @@ function Meetings() {
       title: meeting.title,
       meetingDate: meeting.meetingDate,
       meetingTime: meeting.meetingTime,
-      participants: meeting.participants,
+      emails: meeting.emails,
       location: meeting.location
     });
   };
@@ -200,9 +204,9 @@ function Meetings() {
 
             <input
               type="text"
-              name="participants"
-              placeholder="Participants"
-              value={formData.participants}
+              name="emails"
+              placeholder="Enter Email"
+              value={formData.emails}
               onChange={handleChange}
             />
 
@@ -241,7 +245,7 @@ function Meetings() {
               <th>Title</th>
               <th>Date</th>
               <th>Time</th>
-              <th>Participants</th>
+              <th>Emails</th>
               <th>Location</th>
               <th>Actions</th>
 
@@ -262,7 +266,7 @@ function Meetings() {
 
                   <td>{meeting.meetingTime}</td>
 
-                  <td>{meeting.participants}</td>
+                  <td>{meeting.emails}</td>
 
                   <td>{meeting.location}</td>
 
