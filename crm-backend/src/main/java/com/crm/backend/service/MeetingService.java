@@ -53,8 +53,8 @@ public class MeetingService {
                     updatedMeeting.getMeetingTime()
             );
 
-            meeting.setParticipants(
-                    updatedMeeting.getParticipants()
+            meeting.setEmails(
+                    updatedMeeting.getEmails()
             );
 
             meeting.setLocation(

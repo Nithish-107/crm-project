@@ -17,7 +17,7 @@ public class Meeting {
 
     private String meetingTime;
 
-    private String participants;
+    private String emails;
 
     private String location;
 
@@ -59,14 +59,14 @@ public class Meeting {
         this.meetingTime = meetingTime;
     }
 
-    public String getParticipants() {
-        return participants;
+    public String getEmails() {
+        return emails;
     }
 
-    public void setParticipants(
-            String participants) {
+    public void setEmails(
+            String emails) {
 
-        this.participants = participants;
+        this.emails = emails;
     }
 
     public String getLocation() {
