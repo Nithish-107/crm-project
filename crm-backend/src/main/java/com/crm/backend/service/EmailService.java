@@ -2,8 +2,8 @@ package com.crm.backend.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
-
 import org.springframework.mail.javamail.JavaMailSender;
 
 import org.springframework.stereotype.Service;
@@ -13,6 +13,9 @@ public class EmailService {
 
     @Autowired
     private JavaMailSender mailSender;
+
+    @Value("${spring.mail.username}")
+    private String fromEmail;
 
     public void sendMeetingMail(
 
@@ -29,29 +32,46 @@ public class EmailService {
 
         for(String email : emails) {
 
-            SimpleMailMessage message =
-                    new SimpleMailMessage();
+            try {
 
-            message.setTo(email.trim());
+                SimpleMailMessage message =
+                        new SimpleMailMessage();
 
-            message.setSubject(
-                    "Meeting Invitation"
-            );
+                message.setFrom(fromEmail);
 
-            message.setText(
+                message.setTo(email.trim());
 
-                    "Meeting Details\n\n" +
+                message.setSubject(
+                        "Meeting Invitation"
+                );
 
-                            "Title : " + title + "\n" +
+                message.setText(
 
-                            "Date : " + date + "\n" +
+                        "Meeting Details\n\n" +
 
-                            "Time : " + time + "\n" +
+                                "Title : " + title + "\n" +
 
-                            "Location : " + location
-            );
+                                "Date : " + date + "\n" +
 
-            mailSender.send(message);
+                                "Time : " + time + "\n" +
+
+                                "Location : " + location
+                );
+
+                mailSender.send(message);
+
+                System.out.println(
+                        "MAIL SENT TO : " + email
+                );
+
+            } catch (Exception e) {
+
+                System.out.println(
+                        "MAIL FAILED : " + email
+                );
+
+                e.printStackTrace();
+            }
         }
     }
 }
