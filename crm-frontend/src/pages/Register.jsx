@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import "./Register.css";
 
 function Register() {
 
@@ -30,6 +31,8 @@ function Register() {
 
             alert(response.data);
 
+            window.location.href = "/login";
+
         } catch (error) {
 
             console.log(error);
@@ -39,13 +42,19 @@ function Register() {
 
     return (
 
-        <div>
+        <div className="register-page">
 
-            <h1>Register</h1>
+            <h1 className="register-title">
+                Register
+            </h1>
 
-            <form onSubmit={handleSubmit}>
+            <form
+                className="register-form"
+                onSubmit={handleSubmit}
+            >
 
                 <input
+                    className="register-input"
                     type="text"
                     name="name"
                     placeholder="Enter Name"
@@ -55,6 +64,7 @@ function Register() {
                 <br /><br />
 
                 <input
+                    className="register-input"
                     type="email"
                     name="email"
                     placeholder="Enter Email"
@@ -64,6 +74,7 @@ function Register() {
                 <br /><br />
 
                 <input
+                    className="register-input"
                     type="password"
                     name="password"
                     placeholder="Enter Password"
@@ -72,7 +83,10 @@ function Register() {
 
                 <br /><br />
 
-                <button type="submit">
+                <button
+                    className="register-button"
+                    type="submit"
+                >
                     Register
                 </button>
 

@@ -1,6 +1,4 @@
-
-
-.login-page{
+.register-page{
     font-family: "Poppins", sans-serif;
     height: 100vh;
     display: flex;
@@ -12,8 +10,9 @@
     position: relative;
 }
 
-.login-page::before,
-.login-page::after{
+/* Background Glow Effect */
+.register-page::before,
+.register-page::after{
     content: "";
     position: absolute;
     width: 350px;
@@ -23,20 +22,20 @@
     z-index: 0;
 }
 
-.login-page::before{
+.register-page::before{
     background: #00c6ff;
     top: -100px;
     left: -100px;
 }
 
-.login-page::after{
+.register-page::after{
     background: #0072ff;
     bottom: -100px;
     right: -100px;
 }
 
-
-.login-form{
+/* Form */
+.register-form{
     width: 380px;
     padding: 45px 35px;
     border-radius: 20px;
@@ -50,8 +49,8 @@
     z-index: 1;
 }
 
-
-.login-title{
+/* Title */
+.register-title{
     text-align: center;
     margin-bottom: 30px;
     color: #ffffff;
@@ -61,7 +60,8 @@
     z-index: 1;
 }
 
-.login-input{
+/* Inputs */
+.register-input{
     width: 100%;
     padding: 14px 16px;
     margin-top: 10px;
@@ -75,18 +75,18 @@
     border: 1px solid transparent;
 }
 
-.login-input::placeholder{
+.register-input::placeholder{
     color: rgba(255,255,255,0.7);
 }
 
-.login-input:focus{
+.register-input:focus{
     border-color: #00c6ff;
     box-shadow: 0 0 12px rgba(0,198,255,0.5);
     background: rgba(255,255,255,0.15);
 }
 
-
-.login-button{
+/* Button */
+.register-button{
     width: 100%;
     padding: 14px;
     margin-top: 15px;
@@ -101,16 +101,16 @@
     letter-spacing: 0.5px;
 }
 
-.login-button:hover{
+.register-button:hover{
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(0,114,255,0.4);
 }
 
-.login-button:active{
+.register-button:active{
     transform: scale(0.98);
 }
 
-
+/* Animation */
 @keyframes fadeIn{
     from{
         opacity: 0;
@@ -122,15 +122,15 @@
     }
 }
 
-
+/* Responsive */
 @media(max-width: 480px){
 
-    .login-form{
+    .register-form{
         width: 90%;
         padding: 35px 25px;
     }
 
-    .login-title{
+    .register-title{
         font-size: 28px;
     }
 }
