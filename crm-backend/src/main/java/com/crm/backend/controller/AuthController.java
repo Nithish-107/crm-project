@@ -27,6 +27,14 @@ public class AuthController {
     public User login(@RequestBody LoginRequest request) {
 
         return service.login(request);
+
+        if(user == null) {
+            throw new RuntimeException("Invalid email or password");
+        }
+
+        return user;
+
+
     }
 
 }
