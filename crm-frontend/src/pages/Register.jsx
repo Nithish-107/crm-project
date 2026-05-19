@@ -4,98 +4,108 @@ import { useNavigate } from "react-router-dom";
 import "./Register.css";
 
 function Register() {
+  const navigate = useNavigate();
 
-    const [formData, setFormData] = useState({
-        name: "",
-        email: "",
-        password: ""
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
     });
-    const navigate = useNavigate();
+  };
 
-    const handleChange = (e) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
-    };
+    try {
+      const response = await axios.post(
+        "https://crm-project-kizo.onrender.com/auth/register",
+        formData,
+      );
 
-    const handleSubmit = async (e) => {
+      alert("Registration Successful");
 
-        e.preventDefault();
+      // remove old login session
+      localStorage.removeItem("isLoggedIn");
 
-        try {
+      // redirect to login page
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+      alert("Registration Failed");
+    }
+  };
 
-            const response = await axios.post(
-                "https://crm-project-kizo.onrender.com/auth/register",
-                formData
-            );
+  return (
+    <div className="register-page">
+      <h1 className="register-title">Register</h1>
 
-            alert(response.data);
+      <form className="register-form" onSubmit={handleSubmit}>
+        <input
+          className="register-input"
+          type="text"
+          name="name"
+          placeholder="Enter Name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+        />
 
-            // window.location.href = "/login";
-            navigate("/login");
+        <br />
+        <br />
 
-        } catch (error) {
+        <input
+          className="register-input"
+          type="email"
+          name="email"
+          placeholder="Enter Email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
 
-            console.log(error);
-            alert("Registration Failed");
-        }
-    };
+        <br />
+        <br />
 
-    return (
+        <input
+          className="register-input"
+          type="password"
+          name="password"
+          placeholder="Enter Password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+          minLength={6}
+        />
 
-        <div className="register-page">
+        <br />
+        <br />
 
-            <h1 className="register-title">
-                Register
-            </h1>
+        <button className="register-button" type="submit">
+          Register
+        </button>
 
-            <form
-                className="register-form"
-                onSubmit={handleSubmit}
-            >
-
-                <input
-                    className="register-input"
-                    type="text"
-                    name="name"
-                    placeholder="Enter Name"
-                    onChange={handleChange}
-                />
-
-                <br /><br />
-
-                <input
-                    className="register-input"
-                    type="email"
-                    name="email"
-                    placeholder="Enter Email"
-                    onChange={handleChange}
-                />
-
-                <br /><br />
-
-                <input
-                    className="register-input"
-                    type="password"
-                    name="password"
-                    placeholder="Enter Password"
-                    onChange={handleChange}
-                />
-
-                <br /><br />
-
-                <button
-                    className="register-button"
-                    type="submit"
-                >
-                    Register
-                </button>
-
-            </form>
-        </div>
-    );
+        <p>
+          Already have an account?
+          <span
+            onClick={() => navigate("/")}
+            style={{
+              color: "#00bfff",
+              cursor: "pointer",
+              marginLeft: "5px",
+            }}
+          >
+            Login
+          </span>
+        </p>
+      </form>
+    </div>
+  );
 }
 
 export default Register;
