@@ -31,7 +31,7 @@ function Register() {
 
             alert(response.data);
 
-            window.location.href = "/login";
+            window.location.href = "/";
 
         } catch (error) {
 
