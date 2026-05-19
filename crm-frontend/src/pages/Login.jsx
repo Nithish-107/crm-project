@@ -1,10 +1,12 @@
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "../css/Login.css";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const role = localStorage.getItem("role");
 
@@ -28,7 +30,8 @@ function Login() {
 
           console.log("EMAIL SAVED =", email);
 
-        window.location.href = "/dashboard";
+        // window.location.href = "/dashboard";
+        navigate("/dashboard");
       } else {
         alert("Invalid Credentials");
       }

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "./Register.css";
 
 function Register() {
@@ -9,6 +10,7 @@ function Register() {
         email: "",
         password: ""
     });
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
 
@@ -31,7 +33,8 @@ function Register() {
 
             alert(response.data);
 
-            window.location.href = "/";
+            // window.location.href = "/login";
+            navigate("/login");
 
         } catch (error) {
 
