@@ -33,6 +33,8 @@ function Meetings() {
           "http://localhost:8080/meetings"
         );
 
+         console.log("MEETINGS:", response.data);
+
       setMeetings(response.data);
 
     } catch (error) {
@@ -141,13 +143,50 @@ setMeetings([
     });
   };
 
-  const filteredMeetings =
-    meetings.filter((meeting) =>
 
-      meeting.title
-        .toLowerCase()
-        .includes(search.toLowerCase())
+
+const userEmail =
+  localStorage.getItem("email") || "";
+
+const userRole =
+  localStorage.getItem("role") || "";
+
+
+
+const filteredMeetings = meetings.filter((meeting) => {
+
+  const searchMatch =
+    meeting.title
+      ?.toLowerCase()
+      .includes(search.toLowerCase());
+
+  const role =
+    userRole.trim().toLowerCase();
+
+  
+  if (
+    role === "admin" ||
+    role === "role_admin"
+  ) {
+    return searchMatch;
+  }
+
+ 
+  const meetingEmails =
+    meeting.emails
+      ? meeting.emails
+          .split(",")
+          .map(email =>
+            email.trim().toLowerCase())
+      : [];
+
+  const emailMatch =
+    meetingEmails.includes(
+      userEmail.trim().toLowerCase()
     );
+
+  return emailMatch && searchMatch;
+});
 
   return (
 
