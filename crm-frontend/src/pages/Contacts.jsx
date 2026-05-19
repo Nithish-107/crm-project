@@ -31,7 +31,7 @@ function Contacts() {
 
       const response =
         await axios.get(
-          "http://localhost:8080/contacts"
+          "https://crm-project-kizo.onrender.com/contacts"
         );
 
       setContacts(response.data);
@@ -74,7 +74,7 @@ function Contacts() {
 
         await axios.put(
 
-          `http://localhost:8080/contacts/${formData.id}`,
+          `https://crm-project-kizo.onrender.com/contacts/${formData.id}`,
 
           formData
         );
@@ -83,7 +83,7 @@ function Contacts() {
 
         await axios.post(
 
-          "http://localhost:8080/contacts",
+          "https://crm-project-kizo.onrender.com/contacts",
 
           formData
         );
@@ -113,7 +113,7 @@ function Contacts() {
     try {
 
       await axios.delete(
-        `http://localhost:8080/contacts/${id}`
+        `https://crm-project-kizo.onrender.com/contacts/${id}`
       );
 
       fetchContacts();

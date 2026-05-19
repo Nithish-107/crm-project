@@ -15,7 +15,7 @@ function Tasks() {
   }, []);
 
   const fetchTasks = async () => {
-    const response = await axios.get("http://localhost:8080/tasks");
+    const response = await axios.get("https://crm-project-kizo.onrender.com/tasks");
 
     if (role === "ADMIN") {
       setTasks(response.data);
@@ -30,7 +30,7 @@ function Tasks() {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/users");
+      const response = await axios.get("https://crm-project-kizo.onrender.com/users");
 
       setUsers(response.data);
     } catch (error) {
@@ -66,7 +66,7 @@ function Tasks() {
     try {
       if (editingId) {
         await axios.put(
-          `http://localhost:8080/tasks/${editingId}`,
+          `https://crm-project-kizo.onrender.com/tasks/${editingId}`,
 
           formData,
         );
@@ -76,7 +76,7 @@ function Tasks() {
         setEditingId(null);
       } else {
         await axios.post(
-          "http://localhost:8080/tasks",
+          "https://crm-project-kizo.onrender.com/tasks",
 
           formData,
         );
@@ -101,7 +101,7 @@ function Tasks() {
 
   const deleteTask = async (id) => {
     try {
-      await axios.delete(`http://localhost:8080/tasks/${id}`);
+      await axios.delete(`https://crm-project-kizo.onrender.com/tasks/${id}`);
 
 
       fetchTasks();
@@ -126,7 +126,7 @@ function Tasks() {
   const updateStatus = async (id, status) => {
     try {
       await axios.put(
-        `http://localhost:8080/tasks/${id}/status?status=${status}`,
+        `https://crm-project-kizo.onrender.com/tasks/${id}/status?status=${status}`,
       );
 
       fetchTasks();

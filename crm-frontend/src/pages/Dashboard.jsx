@@ -29,43 +29,43 @@ function Dashboard() {
   const fetchDashboardData = async () => {
     try {
       const customerResponse = await axios.get(
-        "http://localhost:8080/customers/count",
+        "https://crm-project-kizo.onrender.com/customers/count",
       );
 
       setCustomerCount(customerResponse.data);
 
-      const leadResponse = await axios.get("http://localhost:8080/leads/count");
+      const leadResponse = await axios.get("https://crm-project-kizo.onrender.com/leads/count");
 
       setLeadCount(leadResponse.data);
 
-      const taskResponse = await axios.get("http://localhost:8080/tasks/count");
+      const taskResponse = await axios.get("https://crm-project-kizo.onrender.com/tasks/count");
 
       setTaskCount(taskResponse.data);
 
       const convertedResponse = await axios.get(
-        "http://localhost:8080/leads/converted/count",
+        "https://crm-project-kizo.onrender.com/leads/converted/count",
       );
 
       setConvertedCount(convertedResponse.data);
 
       const pendingResponse = await axios.get(
-        "http://localhost:8080/tasks/pending/count",
+        "https://crm-project-kizo.onrender.com/tasks/pending/count",
       );
 
       setPendingTasks(pendingResponse.data);
 
       const overdueResponse = await axios.get(
-        "http://localhost:8080/tasks/overdue/count",
+        "https://crm-project-kizo.onrender.com/tasks/overdue/count",
       );
       setOverdueTasks(overdueResponse.data);
 
-      const userResponse = await axios.get("http://localhost:8080/users/count");
+      const userResponse = await axios.get("https://crm-project-kizo.onrender.com/users/count");
 
       setUserCount(userResponse.data);
 
       try {
         const activityResponse = await axios.get(
-          "http://localhost:8080/activities",
+          "https://crm-project-kizo.onrender.com/activities",
         );
 
         console.log("Activities:", activityResponse.data);

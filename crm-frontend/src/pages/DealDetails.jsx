@@ -32,7 +32,7 @@ function DealDetails() {
 
             const response =
                 await axios.get(
-                    `http://localhost:8080/deals/${id}`
+                    `https://crm-project-kizo.onrender.com/deals/${id}`
                 );
 
             setDeal(response.data);
@@ -59,7 +59,7 @@ function DealDetails() {
         try {
 
             await axios.put(
-                `http://localhost:8080/deals/${id}`,
+                `https://crm-project-kizo.onrender.com/deals/${id}`,
                 deal
             );
 
@@ -88,7 +88,7 @@ const closeDeal = async () => {
     try {
 
         await axios.delete(
-            `http://localhost:8080/deals/${id}`
+            `https://crm-project-kizo.onrender.com/deals/${id}`
         );
 
         alert("Deal Closed Successfully");

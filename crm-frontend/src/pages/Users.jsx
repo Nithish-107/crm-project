@@ -18,7 +18,7 @@ function Users() {
 
             const response =
                 await axios.get(
-                    "http://localhost:8080/users"
+                    "https://crm-project-kizo.onrender.com/users"
                 );
 
             setUsers(response.data);
@@ -34,7 +34,7 @@ function Users() {
         try {
 
             await axios.delete(
-                `http://localhost:8080/users/${id}`
+                `https://crm-project-kizo.onrender.com/users/${id}`
             );
 
             alert("User Deleted");

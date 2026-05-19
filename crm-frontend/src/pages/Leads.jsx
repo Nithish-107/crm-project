@@ -28,7 +28,7 @@ function Leads() {
  
   const fetchLeads = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/leads");
+      const response = await axios.get("https://crm-project-kizo.onrender.com/leads");
 
       if (role === "ADMIN") {
         setLeads(response.data);
@@ -48,7 +48,7 @@ function Leads() {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/users");
+      const response = await axios.get("https://crm-project-kizo.onrender.com/users");
 
       setUsers(response.data);
     } catch (error) {
@@ -85,7 +85,7 @@ function Leads() {
     try {
 
         await axios.post(
-            "http://localhost:8080/leads",
+            "https://crm-project-kizo.onrender.com/leads",
             formData
         );
 
@@ -109,7 +109,7 @@ function Leads() {
 
   const deleteLead = async (id) => {
     try {
-      await axios.delete(`http://localhost:8080/leads/${id}`);
+      await axios.delete(`https://crm-project-kizo.onrender.com/leads/${id}`);
 
       fetchLeads();
     } catch (error) {
@@ -120,7 +120,7 @@ function Leads() {
   const updateStatus = async (id, status) => {
     try {
       await axios.put(
-        `http://localhost:8080/leads/${id}/status?status=${status}`,
+        `https://crm-project-kizo.onrender.com/leads/${id}/status?status=${status}`,
       );
 
       fetchLeads();
@@ -131,7 +131,7 @@ function Leads() {
 
   const convertLead = async (id) => {
     try {
-      await axios.post(`http://localhost:8080/leads/${id}/convert`);
+      await axios.post(`https://crm-project-kizo.onrender.com/leads/${id}/convert`);
 
       alert("Lead Converted");
 

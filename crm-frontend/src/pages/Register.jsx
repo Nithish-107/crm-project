@@ -24,7 +24,7 @@ function Register() {
         try {
 
             const response = await axios.post(
-                "http://localhost:8080/auth/register",
+                "https://crm-project-kizo.onrender.com/auth/register",
                 formData
             );
 

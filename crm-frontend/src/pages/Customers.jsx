@@ -26,7 +26,7 @@ function Customers() {
     const fetchCustomers = async () => {
     try {
         const response = await axios.get(
-            `http://localhost:8080/customers/page?page=${page}&size=5`
+            `https://crm-project-kizo.onrender.com/customers/page?page=${page}&size=5`
         );
 
         setCustomers(response.data.content);
@@ -66,7 +66,7 @@ const addCustomer = async (e) => {
         if(editingId) {
 
             await axios.put(
-                `http://localhost:8080/customers/${editingId}`,
+                `https://crm-project-kizo.onrender.com/customers/${editingId}`,
                 formData
             );
 
@@ -76,7 +76,7 @@ const addCustomer = async (e) => {
         } else {
 
             await axios.post(
-                "http://localhost:8080/customers",
+                "https://crm-project-kizo.onrender.com/customers",
                 formData
             );
         }
@@ -103,7 +103,7 @@ const addCustomer = async (e) => {
     try {
 
         await axios.delete(
-            `http://localhost:8080/customers/${id}`
+            `https://crm-project-kizo.onrender.com/customers/${id}`
         );
 
 
@@ -142,7 +142,7 @@ const addCustomer = async (e) => {
         }
 
         const response = await axios.get(
-            `http://localhost:8080/customers/search?name=${search}`
+            `https://crm-project-kizo.onrender.com/customers/search?name=${search}`
         );
 
         setCustomers(response.data);

@@ -59,7 +59,7 @@ function Deals() {
 
             const response =
                 await axios.get(
-                    "http://localhost:8080/deals"
+                    "https://crm-project-kizo.onrender.com/deals"
                 );
 
             setDeals(response.data);
@@ -88,7 +88,7 @@ function Deals() {
         try {
 
             await axios.post(
-                "http://localhost:8080/deals",
+                "https://crm-project-kizo.onrender.com/deals",
                 formData
             );
 
