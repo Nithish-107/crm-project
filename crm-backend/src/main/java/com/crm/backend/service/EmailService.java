@@ -24,6 +24,8 @@ public class EmailService {
         RestTemplate restTemplate =
                 new RestTemplate();
 
+        System.out.println("API KEY = " + apiKey);
+
         HttpHeaders headers =
                 new HttpHeaders();
 
