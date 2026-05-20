@@ -10,7 +10,7 @@ import java.util.*;
 @Service
 public class EmailService {
 
-    @Value("${BREVO_API_KEY}")
+    @Value("${brevo.api.key}")
     private String apiKey;
 
     public void sendMeetingMail(
