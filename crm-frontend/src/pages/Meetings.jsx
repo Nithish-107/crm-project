@@ -232,6 +232,7 @@ const filteredMeetings = meetings.filter((meeting) => {
               name="meetingDate"
               value={formData.meetingDate}
               onChange={handleChange}
+              required
             />
 
             <input
@@ -239,6 +240,7 @@ const filteredMeetings = meetings.filter((meeting) => {
               name="meetingTime"
               value={formData.meetingTime}
               onChange={handleChange}
+              required
             />
 
             <input
