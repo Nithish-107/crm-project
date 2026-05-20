@@ -63,6 +63,10 @@ public class EmailService {
                         "MAIL FAILED : " + email
                 );
 
+                System.out.println(
+                        e.getMessage()
+                );
+
                 e.printStackTrace();
             }
         }
