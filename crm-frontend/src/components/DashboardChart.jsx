@@ -1,82 +1,68 @@
 import {
-    BarChart,
-    Bar,
-    XAxis,
-    YAxis,
-    Tooltip,
-    CartesianGrid,
-    ResponsiveContainer
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+  ResponsiveContainer
 } from "recharts";
 
 function DashboardChart({
-
-    customerCount,
-    leadCount,
-    taskCount,
-    convertedCount
-
+  customerCount,
+  leadCount,
+  taskCount,
+  convertedCount
 }) {
 
-    const data = [
+  const data = [
+    {
+      name: "Customers",
+      count: customerCount
+    },
+    {
+      name: "Leads",
+      count: leadCount
+    },
+    {
+      name: "Tasks",
+      count: taskCount
+    },
+    {
+      name: "Converted",
+      count: convertedCount
+    }
+  ];
 
-        {
-            name: "Customers",
-            count: customerCount
-        },
+  return (
+    <div
+      style={{
+        width: "100%",
+        height: "300px",
+        marginTop: "10px"
+      }}
+    >
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={data}>
 
-        {
-            name: "Leads",
-            count: leadCount
-        },
+          <CartesianGrid strokeDasharray="3 3" />
 
-        {
-            name: "Tasks",
-            count: taskCount
-        },
+          <XAxis dataKey="name" />
 
-        {
-            name: "Converted",
-            count: convertedCount
-        }
-    ];
+          <YAxis />
 
-    return (
+          <Tooltip />
 
-        <div
-            style={{
-                width: "100%",
-                height: 350,
-                marginTop: "40px",
-                background: "white",
-                padding: "20px",
-                borderRadius: "10px"
-            }}
-        >
+          <Bar
+            dataKey="count"
+            fill="#3b82f6"
+            radius={[6, 6, 0, 0]}
+          />
 
-
-            <ResponsiveContainer>
-
-                <BarChart data={data}>
-
-                    <CartesianGrid strokeDasharray="3 3" />
-
-                    <XAxis dataKey="name" />
-
-                    <YAxis />
-
-                    <Tooltip />
-
-                    <Bar
-                        dataKey="count"
-                        fill="#4a90e2"
-                    />
-
-                </BarChart>
-
-            </ResponsiveContainer>
-
-        </div>
-    );
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  );
 }
 
 export default DashboardChart;

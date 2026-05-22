@@ -1,16 +1,10 @@
-/* ============================================================
-   CRM Dashboard — Premium SaaS Admin CSS
-   Theme: Light Corporate · Slate-Blue · Clean & Data-Dense
-   ============================================================ */
 
-/* ── 1. Design Tokens ────────────────────────────────────── */
 :root {
-  /* Page background */
+  
   --bg-page:          #f1f5f9;
   --bg-surface:       #ffffff;
   --bg-elevated:      #f8fafc;
 
-  /* Brand blue */
   --blue-50:          #eff6ff;
   --blue-100:         #dbeafe;
   --blue-200:         #bfdbfe;
@@ -19,7 +13,7 @@
   --blue-600:         #2563eb;
   --blue-700:         #1d4ed8;
 
-  /* Accent colors for stat cards */
+ 
   --card-1-from:      #667eea;
   --card-1-to:        #764ba2;
   --card-2-from:      #f093fb;
@@ -31,7 +25,7 @@
   --card-5-from:      #fa709a;
   --card-5-to:        #fee140;
 
-  /* Neutrals */
+
   --gray-50:          #f8fafc;
   --gray-100:         #f1f5f9;
   --gray-200:         #e2e8f0;
@@ -43,37 +37,37 @@
   --gray-800:         #1e293b;
   --gray-900:         #0f172a;
 
-  /* Alert colours */
+
   --danger-bg:        #fff1f2;
   --danger-border:    rgba(239, 68, 68, 0.2);
   --danger-text:      #e11d48;
   --warning-text:     #d97706;
 
-  /* Shadows */
+
   --shadow-xs:   0 1px 3px rgba(15, 23, 42, 0.05);
   --shadow-sm:   0 2px 8px rgba(15, 23, 42, 0.07), 0 1px 2px rgba(15, 23, 42, 0.04);
   --shadow-md:   0 4px 20px rgba(15, 23, 42, 0.09), 0 2px 4px rgba(15, 23, 42, 0.05);
   --shadow-lg:   0 12px 36px rgba(15, 23, 42, 0.13), 0 4px 10px rgba(15, 23, 42, 0.06);
   --shadow-card: 0 20px 48px rgba(15, 23, 42, 0.16), 0 4px 12px rgba(15, 23, 42, 0.08);
 
-  /* Radius */
+
   --radius-sm:   8px;
   --radius-md:   12px;
   --radius-lg:   18px;
   --radius-xl:   24px;
 
-  /* Transitions */
+ 
   --ease:        cubic-bezier(0.22, 1, 0.36, 1);
   --t-fast:      170ms var(--ease);
   --t-base:      260ms var(--ease);
   --t-slow:      420ms var(--ease);
 
-  /* Typography */
+  
   --font-ui:     'SF Pro Display', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   --font-mono:   'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
 }
 
-/* ── 2. Global Reset ─────────────────────────────────────── */
+
 *,
 *::before,
 *::after {
@@ -97,7 +91,7 @@ body {
   line-height: 1.6;
 }
 
-/* ── 3. Dashboard Wrapper ────────────────────────────────── */
+
 .dashboard {
   max-width: 1380px;
   margin: 0 auto;
@@ -113,7 +107,6 @@ body {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── 4. Welcome Heading ──────────────────────────────────── */
 .welcome-text {
   font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 800;
@@ -126,7 +119,6 @@ body {
   line-height: 1.2;
 }
 
-/* Waving hand emoji decoration */
 .welcome-text::before {
   content: '👋';
   font-size: 0.85em;
@@ -143,14 +135,14 @@ body {
   60%  { transform: rotate(-4deg); }
 }
 
-/* ── 5. Stat Cards Row ───────────────────────────────────── */
+
 .dashboard-cards {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 18px;
 }
 
-/* Base card */
+
 .card {
   background: var(--bg-surface);
   border-radius: var(--radius-lg);
@@ -168,7 +160,7 @@ body {
   cursor: default;
 }
 
-/* Top coloured glow strip */
+
 .card::before {
   content: '';
   position: absolute;
@@ -182,7 +174,7 @@ body {
 
 .card:hover::before { height: 5px; }
 
-/* Watermark icon area (decorative circle) */
+
 .card::after {
   content: '';
   position: absolute;
@@ -197,7 +189,6 @@ body {
 
 .card:hover::after { opacity: 0.1; }
 
-/* Assign gradient bars + watermarks per card index */
 .card:nth-child(1)::before { background: linear-gradient(90deg, var(--card-1-from), var(--card-1-to)); }
 .card:nth-child(1)::after  { background: linear-gradient(135deg, var(--card-1-from), var(--card-1-to)); }
 
@@ -213,13 +204,12 @@ body {
 .card:nth-child(5)::before { background: linear-gradient(90deg, var(--card-5-from), var(--card-5-to)); }
 .card:nth-child(5)::after  { background: linear-gradient(135deg, var(--card-5-from), var(--card-5-to)); }
 
-/* Card hover lift */
+
 .card:hover {
   transform: translateY(-5px);
   box-shadow: var(--shadow-card);
 }
 
-/* Card label */
 .card > h2 {
   font-size: 11px;
   font-weight: 700;
@@ -229,7 +219,7 @@ body {
   line-height: 1;
 }
 
-/* Card number */
+
 .card > h1 {
   font-size: clamp(2rem, 3.5vw, 2.8rem);
   font-weight: 900;
@@ -239,7 +229,7 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-/* Staggered entrance */
+
 .card { animation: cardSlide var(--t-slow) both; }
 .card:nth-child(1) { animation-delay: 0.05s; }
 .card:nth-child(2) { animation-delay: 0.10s; }
@@ -252,7 +242,6 @@ body {
   to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* ── 6. Notification Box ─────────────────────────────────── */
 .notification-box {
   background: var(--bg-surface);
   border: 1px solid var(--gray-200);
@@ -291,17 +280,16 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-/* First p (overdue) — red accent */
+
 .notification-box > p:nth-of-type(1) strong {
   color: var(--danger-text);
 }
 
-/* Second p (pending) — amber accent */
+
 .notification-box > p:nth-of-type(2) strong {
   color: var(--warning-text);
 }
 
-/* ── 7. Dashboard Grid (2-col lower section) ─────────────── */
 .dashboard-grid {
   display: grid;
   grid-template-columns: 1fr 1.4fr;
@@ -309,7 +297,7 @@ body {
   align-items: start;
 }
 
-/* ── 8. Dashboard Boxes ──────────────────────────────────── */
+
 .dashboard-box {
   background: var(--bg-surface);
   border: 1px solid var(--gray-200);
@@ -330,7 +318,7 @@ body {
   box-shadow: var(--shadow-md);
 }
 
-/* Subtle top accent bar */
+
 .dashboard-box::before {
   content: '';
   position: absolute;
@@ -354,7 +342,6 @@ body {
   border-bottom: 1px solid var(--gray-100);
 }
 
-/* ── 9. Activity Items ───────────────────────────────────── */
 .activity-item {
   display: flex;
   flex-direction: column;
@@ -408,7 +395,7 @@ body {
   font-family: var(--font-mono);
 }
 
-/* Empty state */
+
 .dashboard-box:not(:has(.activity-item)) > p {
   font-size: 13px;
   color: var(--gray-300);
@@ -416,46 +403,44 @@ body {
   padding: 40px 0;
 }
 
-/* ── 10. Chart Box  ──────────────────────────────────────── */
-/* The chart box (second dashboard-box) gets a slightly taller min-height */
+
 .dashboard-box:nth-child(2) {
   min-height: 360px;
 }
 
-/* DashboardChart child fill */
-.dashboard-box:nth-child(2) > *:last-child {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.dashboard-box:nth-child(2) {
+  min-height: 420px;
 }
 
-/* ── 11. Scrollbar ───────────────────────────────────────── */
+.dashboard-box:nth-child(2) .recharts-responsive-container {
+  width: 100% !important;
+  height: 300px !important;
+}
+
+
 ::-webkit-scrollbar        { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track  { background: transparent; }
 ::-webkit-scrollbar-thumb  { background: var(--gray-300); border-radius: 99px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--gray-400); }
 
-/* ── 12. Selection ───────────────────────────────────────── */
 ::selection {
   background: rgba(59, 130, 246, 0.18);
   color: var(--gray-900);
 }
 
-/* ── 13. Responsive — Tablet (≤ 1100px) ─────────────────── */
+
 @media (max-width: 1100px) {
   .dashboard-cards {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  /* Push 4th and 5th card into the second row, 2+3 layout */
+ 
   .card:nth-child(4),
   .card:nth-child(5) {
     /* They naturally wrap in a 3-col grid */
   }
 }
 
-/* ── 14. Responsive — Tablet (≤ 860px) ──────────────────── */
 @media (max-width: 860px) {
   .dashboard {
     padding: 28px 20px 60px;
@@ -481,7 +466,7 @@ body {
   }
 }
 
-/* ── 15. Responsive — Mobile (≤ 520px) ──────────────────── */
+
 @media (max-width: 520px) {
   .dashboard {
     padding: 18px 12px 48px;
@@ -493,7 +478,6 @@ body {
     gap: 12px;
   }
 
-  /* Give last card full width when count is odd */
   .card:nth-child(5) {
     grid-column: 1 / -1;
   }
