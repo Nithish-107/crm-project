@@ -515,3 +515,20 @@
   background: rgba(59, 130, 246, 0.25);
   color: #ffffff;
 }
+
+/* =========================
+   MOBILE SIDEBAR
+========================= */
+
+@media (max-width: 768px) {
+
+  .sidebar {
+    left: -280px;
+    transition: 0.3s ease;
+    z-index: 2000;
+  }
+
+  .app-layout.sidebar-open .sidebar {
+    left: 0;
+  }
+}

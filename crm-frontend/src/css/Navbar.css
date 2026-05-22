@@ -600,3 +600,38 @@
     animation: none;
   }
 }
+
+/* =========================
+   MOBILE MENU BUTTON
+========================= */
+
+.mobile-menu-btn {
+  display: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #0f172a;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+  .mobile-menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+  }
+
+  .navbar {
+    left: 0 !important;
+  }
+
+  .nav-left {
+    display: flex;
+    align-items: center;
+  }
+}

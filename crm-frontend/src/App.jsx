@@ -14,28 +14,28 @@ import Meetings from "./pages/Meetings";
 import Contacts from "./pages/Contacts";
 import Deals from "./pages/Deals";
 import DealDetails from "./pages/DealDetails";
+import { useState } from "react";
 import "./css/responsive.css";
 import "./App.css";
 
 function App() {
   const isLoggedIn = localStorage.getItem("isLoggedIn");
   const role = localStorage.getItem("role");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <BrowserRouter>
       {isLoggedIn ? (
-        <div className="app-layout">
+        <div className={`app-layout ${sidebarOpen ? "sidebar-open" : ""}`}>
           
-          {/* Sidebar */}
-          <Sidebar />
+         
+          <Sidebar sidebarOpen={sidebarOpen} />
 
-          {/* Main Content */}
           <div className="main-content">
 
-            {/* Navbar */}
-            <Navbar />
+            
+            <Navbar setSidebarOpen={setSidebarOpen} />
 
-            {/* Page Content */}
             <div className="page-content">
               <Routes>
                 <Route path="/dashboard" element={<Dashboard />} />
