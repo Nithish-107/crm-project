@@ -1,113 +1,609 @@
-.deal-details-page{
+/* ============================================================
+   DealDetails Page — Corporate SaaS Dashboard
+   Design: Refined slate-blue system, detail card layout,
+   inline edit states, contextual button hierarchy
+   ============================================================ */
 
-    padding:30px;
+/* ── Google Font Import ── */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap');
 
-    background:#f5f7fb;
+/* ── CSS Custom Properties ── */
+:root {
+  /* Surfaces */
+  --bg-base:        #f0f2f7;
+  --bg-surface:     #ffffff;
+  --bg-surface-2:   #f7f8fc;
+  --bg-surface-3:   #eef1f8;
 
-    min-height:100vh;
+  /* Brand */
+  --brand-primary:  #2c5282;
+  --brand-mid:      #3a6dab;
+  --brand-light:    #4a85c8;
+  --brand-accent:   #5ba3e8;
+  --brand-glow:     rgba(91, 163, 232, 0.18);
+
+  /* Semantic */
+  --success:        #276749;
+  --success-bg:     #f0fff4;
+  --success-border: #9ae6b4;
+  --danger:         #c53030;
+  --danger-bg:      #fff5f5;
+  --danger-border:  #fed7d7;
+  --danger-hover:   #e53e3e;
+  --warning:        #b7791f;
+  --warning-bg:     #fffbeb;
+  --warning-border: #f6e05e;
+
+  /* Text */
+  --text-primary:   #1a202c;
+  --text-secondary: #4a5568;
+  --text-muted:     #718096;
+  --text-label:     #8a94a6;
+  --text-inverse:   #ffffff;
+
+  /* Borders */
+  --border-base:    #e2e8f0;
+  --border-focus:   #4a85c8;
+  --border-subtle:  #edf2f7;
+
+  /* Shadows */
+  --shadow-xs:    0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm:    0 1px 4px rgba(0, 0, 0, 0.07), 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-md:    0 4px 16px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+  --shadow-lg:    0 8px 32px rgba(0, 0, 0, 0.10), 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-brand: 0 4px 16px rgba(44, 82, 130, 0.28);
+  --shadow-save:  0 4px 14px rgba(39, 103, 73, 0.30);
+  --shadow-close: 0 4px 14px rgba(197, 48, 48, 0.26);
+
+  /* Shape */
+  --radius-sm:  6px;
+  --radius-md:  10px;
+  --radius-lg:  16px;
+  --radius-xl:  20px;
+
+  /* Motion */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Fonts */
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'DM Mono', 'Courier New', monospace;
 }
 
-.details-top{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    margin-bottom:25px;
+/* ── Reset ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.details-card{
+/* ============================================================
+   PAGE SHELL
+   ============================================================ */
+.deal-details-page {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-primary);
 
-    background:white;
+  background-color: var(--bg-base);
+  background-image:
+    radial-gradient(circle at 8% 12%, rgba(91, 163, 232, 0.07) 0%, transparent 44%),
+    radial-gradient(circle at 92% 82%, rgba(44, 82, 130, 0.05) 0%, transparent 44%),
+    linear-gradient(180deg, #eef1f8 0%, #f0f2f7 100%);
 
-    padding:30px;
-
-    border-radius:12px;
+  min-height: 100vh;
+  padding: 32px 40px 72px;
+  animation: pageFadeIn 0.38s ease both;
 }
 
-.details-grid{
-
-    display:grid;
-
-    grid-template-columns:1fr 1fr;
-
-    gap:25px;
-
-    margin-top:30px;
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0);   }
 }
 
-.details-grid label{
-
-    font-weight:600;
-
-    color:#475569;
+/* ── Loading state ── */
+.deal-details-page h2 {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-muted);
+  padding: 48px 0;
+  text-align: center;
+  animation: pulse 1.4s ease-in-out infinite;
 }
 
-.details-grid p{
-
-    margin-top:8px;
+@keyframes pulse {
+  0%, 100% { opacity: 1;    }
+  50%       { opacity: 0.45; }
 }
 
-.details-grid input,
-.details-grid select,
-textarea{
-
-    width:100%;
-
-    padding:12px;
-
-    margin-top:8px;
-
-    border:1px solid #cbd5e1;
-
-    border-radius:8px;
+/* ============================================================
+   TOP BAR  (back + action buttons)
+   ============================================================ */
+.details-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
 }
 
-.description-section{
-
-    margin-top:30px;
+/* Right-side button group */
+.details-top > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
+/* ── Shared button base ── */
 .back-btn,
+.close-btn,
 .edit-btn,
-.save-btn,
-.close-btn{
-
-    border:none;
-
-    padding:10px 18px;
-
-    border-radius:8px;
-
-    cursor:pointer;
-
-    margin-left:10px;
+.save-btn {
+  height: 38px;
+  padding: 0 20px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
 }
 
-.back-btn{
-
-    background:#e2e8f0;
+.back-btn:active,
+.close-btn:active,
+.edit-btn:active,
+.save-btn:active {
+  transform: translateY(0) !important;
+  box-shadow: none !important;
 }
 
-.edit-btn{
-
-    background:#2563eb;
-
-    color:white;
+/* ── Back button ── ghost style ── */
+.back-btn {
+  color: var(--text-secondary);
+  background: var(--bg-surface);
+  border-color: var(--border-base);
+  box-shadow: var(--shadow-xs);
 }
 
-.save-btn{
-
-    background:#16a34a;
-
-    color:white;
+.back-btn:hover {
+  color: var(--brand-primary);
+  border-color: rgba(44, 82, 130, 0.3);
+  background: rgba(44, 82, 130, 0.04);
+  transform: translateX(-2px);
+  box-shadow: var(--shadow-sm);
 }
 
-.close-btn{
+/* ── Close Deal button ── danger ── */
+.close-btn {
+  color: var(--danger);
+  background: var(--danger-bg);
+  border-color: var(--danger-border);
+}
 
-    background:#dc2626;
+.close-btn:hover {
+  background: var(--danger-hover);
+  border-color: var(--danger-hover);
+  color: var(--text-inverse);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-close);
+}
 
-    color:white;
+/* ── Edit / Cancel button ── secondary ── */
+.edit-btn {
+  color: var(--brand-primary);
+  background: rgba(44, 82, 130, 0.07);
+  border-color: rgba(44, 82, 130, 0.20);
+}
+
+.edit-btn:hover {
+  background: rgba(44, 82, 130, 0.13);
+  border-color: var(--brand-mid);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-xs);
+}
+
+/* ── Save button ── primary success ── */
+.save-btn {
+  color: var(--text-inverse);
+  background: linear-gradient(135deg, #276749 0%, #2f855a 100%);
+  border-color: transparent;
+  box-shadow: var(--shadow-save);
+}
+
+.save-btn:hover {
+  background: linear-gradient(135deg, #22543d 0%, #276749 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(39, 103, 73, 0.38);
+}
+
+/* ============================================================
+   DETAILS CARD
+   ============================================================ */
+.details-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-base);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  padding: 36px 40px 40px;
+  animation: slideUp 0.4s ease 0.06s both;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* ── Deal Title (view mode) ── */
+.details-card > h1 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--text-primary);
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1.5px solid var(--border-subtle);
+  position: relative;
+}
+
+.details-card > h1::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 40px;
+  height: 2.5px;
+  background: linear-gradient(90deg, var(--brand-primary), var(--brand-accent));
+  border-radius: 2px;
+}
+
+/* ── Deal Title (edit mode input) ── */
+.deal-title-input {
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+  color: var(--text-primary);
+  background: var(--bg-surface-3);
+  border: 2px solid var(--border-focus);
+  border-radius: var(--radius-md);
+  padding: 10px 16px;
+  outline: none;
+  margin-bottom: 28px;
+  display: block;
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+  box-shadow: 0 0 0 3px var(--brand-glow);
+}
+
+.deal-title-input:focus {
+  border-color: var(--brand-light);
+  box-shadow: 0 0 0 4px rgba(91, 163, 232, 0.22);
+}
+
+/* ============================================================
+   DETAILS GRID  (12 fields × 3 columns)
+   ============================================================ */
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 28px;
+}
+
+/* Each field cell */
+.details-grid > div {
+  padding: 18px 22px;
+  border-right: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  transition: background var(--transition-fast);
+}
+
+/* Remove right border on every 3rd cell */
+.details-grid > div:nth-child(3n) {
+  border-right: none;
+}
+
+/* Remove bottom border from last row (last 3 cells) */
+.details-grid > div:nth-last-child(-n+3) {
+  border-bottom: none;
+}
+
+/* Subtle hover on cells */
+.details-grid > div:hover {
+  background: var(--bg-surface-2);
+}
+
+/* ── Field label ── */
+.details-grid label {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.85px;
+  text-transform: uppercase;
+  color: var(--text-label);
+  margin-bottom: 6px;
+}
+
+/* ── Field value (view mode) ── */
+.details-grid p {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.4;
+  min-height: 21px;
+}
+
+/* Amount & Expected Revenue — monospace, brand color */
+.details-grid > div:nth-child(3) p,
+.details-grid > div:nth-child(8) p {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--brand-primary);
+  letter-spacing: 0.2px;
+}
+
+/* Probability — append % style */
+.details-grid > div:nth-child(6) p {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--warning);
+}
+
+/* Closing Date — monospace */
+.details-grid > div:nth-child(12) p {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* ── Edit mode inputs inside grid ── */
+.details-grid input,
+.details-grid select {
+  width: 100%;
+  height: 36px;
+  padding: 0 12px;
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text-primary);
+  background: var(--bg-surface-2);
+  border: 1.5px solid var(--border-base);
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition:
+    border-color var(--transition-fast),
+    background var(--transition-fast),
+    box-shadow var(--transition-fast);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.details-grid input:focus,
+.details-grid select:focus {
+  border-color: var(--border-focus);
+  background: var(--bg-surface);
+  box-shadow: 0 0 0 3px var(--brand-glow);
+}
+
+.details-grid input[type="number"] {
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.details-grid input[type="date"] {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+/* Select arrow icon using CSS */
+.details-grid select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23718096' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+  cursor: pointer;
+}
+
+.details-grid select:focus {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234a85c8' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+/* ============================================================
+   DESCRIPTION SECTION
+   ============================================================ */
+.description-section {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  background: var(--bg-surface-2);
+}
+
+.description-section label {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.85px;
+  text-transform: uppercase;
+  color: var(--text-label);
+  margin-bottom: 10px;
+}
+
+/* View mode */
+.description-section p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  min-height: 24px;
+}
+
+/* Edit mode textarea */
+.description-section textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 12px 14px;
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  color: var(--text-primary);
+  background: var(--bg-surface);
+  border: 1.5px solid var(--border-base);
+  border-radius: var(--radius-md);
+  outline: none;
+  resize: vertical;
+  line-height: 1.65;
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.description-section textarea:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px var(--brand-glow);
+}
+
+/* ============================================================
+   RESPONSIVE — TABLET  (≤ 1024px)
+   ============================================================ */
+@media (max-width: 1024px) {
+  .deal-details-page {
+    padding: 26px 24px 56px;
+  }
+
+  .details-card {
+    padding: 28px 26px 32px;
+  }
+
+  .details-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Adjust border removal for 2-col */
+  .details-grid > div:nth-child(3n) {
+    border-right: 1px solid var(--border-subtle);
+  }
+
+  .details-grid > div:nth-child(2n) {
+    border-right: none;
+  }
+
+  .details-grid > div:nth-last-child(-n+3) {
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .details-grid > div:nth-last-child(-n+2) {
+    border-bottom: none;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — MOBILE  (≤ 640px)
+   ============================================================ */
+@media (max-width: 640px) {
+  .deal-details-page {
+    padding: 18px 14px 48px;
+  }
+
+  .details-top {
+    gap: 12px;
+  }
+
+  .details-top > div {
+    gap: 8px;
+  }
+
+  .back-btn,
+  .close-btn,
+  .edit-btn,
+  .save-btn {
+    height: 36px;
+    padding: 0 14px;
+    font-size: 12.5px;
+  }
+
+  .details-card {
+    padding: 22px 18px 26px;
+    border-radius: var(--radius-lg);
+  }
+
+  .details-card > h1 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+  }
+
+  .deal-title-input {
+    font-size: 17px;
+    padding: 9px 13px;
+    margin-bottom: 20px;
+  }
+
+  /* Single column grid on mobile */
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .details-grid > div {
+    border-right: none !important;
+    border-bottom: 1px solid var(--border-subtle) !important;
+  }
+
+  .details-grid > div:last-child {
+    border-bottom: none !important;
+  }
+
+  .description-section {
+    padding: 16px 16px;
+  }
+}
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+.deal-details-page::-webkit-scrollbar {
+  width: 5px;
+}
+
+.deal-details-page::-webkit-scrollbar-track {
+  background: var(--bg-surface-2);
+}
+
+.deal-details-page::-webkit-scrollbar-thumb {
+  background: var(--border-base);
+  border-radius: 3px;
+}
+
+/* ============================================================
+   ACCESSIBILITY — Reduced Motion
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
