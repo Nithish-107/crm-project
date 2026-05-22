@@ -1,225 +1,602 @@
-/* Navbar.css */
+/* ============================================================
+   CRM Navbar — Premium SaaS Top Navigation CSS
+   Theme: Light Corporate · Glass · Slate-Blue Accents
+   ============================================================ */
 
+/* ── 1. Design Tokens ────────────────────────────────────── */
+:root {
+  /* Navbar surface */
+  --nb-bg:              rgba(255, 255, 255, 0.88);
+  --nb-border:          rgba(226, 232, 240, 0.8);
+  --nb-shadow:          0 1px 0 rgba(15, 23, 42, 0.06),
+                        0 4px 16px rgba(15, 23, 42, 0.06);
+  --nb-height:          64px;
+
+  /* Brand */
+  --blue-50:            #eff6ff;
+  --blue-100:           #dbeafe;
+  --blue-400:           #60a5fa;
+  --blue-500:           #3b82f6;
+  --blue-600:           #2563eb;
+
+  /* Neutrals */
+  --gray-50:            #f8fafc;
+  --gray-100:           #f1f5f9;
+  --gray-200:           #e2e8f0;
+  --gray-300:           #cbd5e1;
+  --gray-400:           #94a3b8;
+  --gray-500:           #64748b;
+  --gray-600:           #475569;
+  --gray-700:           #334155;
+  --gray-800:           #1e293b;
+  --gray-900:           #0f172a;
+
+  /* Icon button */
+  --icon-btn-bg:        transparent;
+  --icon-btn-hover:     #f1f5f9;
+  --icon-btn-active:    #e2e8f0;
+
+  /* Search */
+  --search-bg:          #f1f5f9;
+  --search-focus-bg:    #ffffff;
+  --search-border:      transparent;
+  --search-focus-border: #3b82f6;
+
+  /* Profile popup */
+  --popup-bg:           #ffffff;
+  --popup-shadow:       0 8px 30px rgba(15, 23, 42, 0.14),
+                        0 2px 8px rgba(15, 23, 42, 0.08),
+                        0 0 0 1px rgba(15, 23, 42, 0.06);
+
+  /* Danger */
+  --danger:             #ef4444;
+  --danger-hover:       #dc2626;
+  --danger-bg:          #fff1f2;
+
+  /* Transitions */
+  --ease:               cubic-bezier(0.22, 1, 0.36, 1);
+  --t-fast:             160ms var(--ease);
+  --t-base:             240ms var(--ease);
+
+  /* Radius */
+  --radius-sm:          7px;
+  --radius-md:          11px;
+  --radius-lg:          16px;
+  --radius-xl:          20px;
+  --radius-full:        9999px;
+
+  /* Typography */
+  --font-ui:            'SF Pro Display', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* ── 2. Navbar Shell ─────────────────────────────────────── */
 .navbar {
-    height: 75px;
-    background: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 30px;
-    border-bottom: 1px solid #e5e7eb;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+  position: fixed;
+  top: 0;
+  /* Start after the sidebar (match --sb-width from Sidebar.css) */
+  left: 248px;
+  right: 0;
+  height: var(--nb-height);
+  z-index: 90;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 24px;
+
+  background: var(--nb-bg);
+  backdrop-filter: blur(14px) saturate(1.6);
+  -webkit-backdrop-filter: blur(14px) saturate(1.6);
+  border-bottom: 1px solid var(--nb-border);
+  box-shadow: var(--nb-shadow);
+
+  font-family: var(--font-ui);
+
+  /* Slide-down entrance */
+  animation: navbarIn 350ms var(--ease) both;
+}
+
+@keyframes navbarIn {
+  from { opacity: 0; transform: translateY(-100%); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── 3. Nav Left — Page Title ────────────────────────────── */
+.nav-left {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
 }
 
 .nav-left h2 {
-    font-size: 28px;
-    color: #1e293b;
-    font-weight: 700;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--gray-900);
+  line-height: 1;
+  white-space: nowrap;
 }
 
+/* ── 4. Nav Center — Search ──────────────────────────────── */
 .nav-center {
-    flex: 1;
-    display: flex;
-    justify-content: center;
+  flex: 1;
+  max-width: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .search-box {
-    width: 420px;
-    height: 45px;
-    background: #f1f5f9;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    padding: 0 15px;
-    gap: 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--search-bg);
+  border: 1.5px solid var(--search-border);
+  border-radius: var(--radius-full);
+  padding: 0 16px;
+  height: 38px;
+  transition:
+    background-color var(--t-fast),
+    border-color var(--t-fast),
+    box-shadow var(--t-fast);
+  cursor: text;
 }
 
+.search-box:focus-within {
+  background: var(--search-focus-bg);
+  border-color: var(--search-focus-border);
+  box-shadow:
+    0 0 0 3px rgba(59, 130, 246, 0.12),
+    0 2px 8px rgba(15, 23, 42, 0.06);
+}
+
+/* Search icon */
+.search-box > svg {
+  flex-shrink: 0;
+  color: var(--gray-400);
+  width: 16px;
+  height: 16px;
+  transition: color var(--t-fast);
+}
+
+.search-box:focus-within > svg {
+  color: var(--blue-500);
+}
+
+/* Search input */
 .search-box input {
-    border: none;
-    background: transparent;
-    outline: none;
-    width: 100%;
-    font-size: 15px;
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-family: var(--font-ui);
+  font-size: 13.5px;
+  color: var(--gray-800);
+  caret-color: var(--blue-500);
+  min-width: 0;
 }
 
+.search-box input::placeholder {
+  color: var(--gray-400);
+  font-size: 13.5px;
+}
+
+/* ── 5. Nav Right — Icon Buttons & Profile ───────────────── */
 .nav-right {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
+/* ── 6. Icon Buttons ─────────────────────────────────────── */
 .icon-btn {
-    width: 42px;
-    height: 42px;
-    border: none;
-    background: #f8fafc;
-    border-radius: 10px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background: var(--icon-btn-bg);
+  border: none;
+  cursor: pointer;
+  color: var(--gray-500);
+  transition:
+    background-color var(--t-fast),
+    color var(--t-fast),
+    transform var(--t-fast),
+    box-shadow var(--t-fast);
+  outline: none;
+  position: relative;
+}
+
+.icon-btn > svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  flex-shrink: 0;
 }
 
 .icon-btn:hover {
-    background: #e2e8f0;
+  background: var(--icon-btn-hover);
+  color: var(--gray-800);
+}
+
+.icon-btn:active {
+  background: var(--icon-btn-active);
+  transform: scale(0.94);
+}
+
+.icon-btn:focus-visible {
+  box-shadow: 0 0 0 2px var(--blue-500);
+  background: var(--icon-btn-hover);
+  outline: none;
+}
+
+/* ── 7. Profile Wrapper & Trigger ────────────────────────── */
+.profile-wrapper {
+  position: relative;
+  margin-left: 8px;
 }
 
 .profile-box {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-left: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 10px 5px 5px;
+  border-radius: var(--radius-xl);
+  cursor: pointer;
+  transition:
+    background-color var(--t-fast),
+    box-shadow var(--t-fast);
+  border: 1px solid transparent;
+  user-select: none;
 }
 
+.profile-box:hover {
+  background: var(--gray-100);
+  border-color: var(--gray-200);
+}
+
+.profile-box:active {
+  background: var(--gray-200);
+  transform: scale(0.98);
+}
+
+/* ── 8. Profile Avatar Circle ────────────────────────────── */
 .profile-circle {
-    width: 45px;
-    height: 45px;
-    background: #f97316;
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    font-weight: bold;
-    text-transform: uppercase;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #3b82f6 100%);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.35);
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+/* ── 9. Profile Info Text ────────────────────────────────── */
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
 }
 
 .profile-info h4 {
-    margin: 0;
-    font-size: 15px;
-    color: #111827;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gray-800);
+  line-height: 1.2;
+  white-space: nowrap;
+  text-transform: capitalize;
 }
 
 .profile-info p {
-    margin: 0;
-    font-size: 13px;
-    color: gray;
-    text-transform: uppercase;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--gray-400);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1;
 }
 
-.logout-btn {
-    padding: 10px 18px;
-    border: none;
-    background: crimson;
-    color: white;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: 0.3s;
-}
-
-.logout-btn:hover {
-    background: darkred;
-}
-
-.profile-wrapper {
-    position: relative;
-}
-
-.profile-box {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-}
-
-.profile-circle {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: orange;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-}
-
+/* ── 10. Profile Popup Dropdown ──────────────────────────── */
 .profile-popup {
-    position: absolute;
-    top: 60px;
-    right: 0;
-    width: 280px;
-    background: white;
-    border-radius: 14px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-    padding: 20px;
-    z-index: 999;
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 240px;
+  background: var(--popup-bg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--popup-shadow);
+  overflow: hidden;
+  z-index: 200;
+
+  /* Pop-in animation */
+  animation: popIn 200ms var(--ease) both;
+  transform-origin: top right;
 }
 
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* ── 11. Popup Header ────────────────────────────────────── */
 .popup-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 16px 14px;
+  background: var(--gray-50);
+  border-bottom: 1px solid var(--gray-200);
 }
 
 .popup-user {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
 }
 
-.popup-circle {
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    background: #4f46e5;
-    color: white;
-    font-size: 22px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.popup-user > div {
+  min-width: 0;
 }
 
 .popup-user h3 {
-    margin: 0;
-    font-size: 18px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gray-900);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: capitalize;
+  line-height: 1.2;
 }
 
 .popup-user p {
-    margin: 0;
-    color: gray;
-    font-size: 14px;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--gray-400);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  margin-top: 2px;
 }
 
+/* Popup avatar */
+.popup-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #3b82f6 100%);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+  line-height: 1;
+}
+
+/* Close button */
 .close-btn {
-    border: none;
-    background: none;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: transparent;
+  color: var(--gray-400);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition:
+    background-color var(--t-fast),
+    color var(--t-fast);
+  outline: none;
 }
 
+.close-btn > svg {
+  width: 16px;
+  height: 16px;
+}
+
+.close-btn:hover {
+  background: var(--gray-200);
+  color: var(--gray-700);
+}
+
+.close-btn:focus-visible {
+  box-shadow: 0 0 0 2px var(--blue-500);
+  outline: none;
+}
+
+/* ── 12. Popup Body ──────────────────────────────────────── */
 .popup-body {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  gap: 2px;
 }
 
+/* Menu items */
 .popup-item {
-    border: none;
-    background: #f3f4f6;
-    padding: 12px;
-    border-radius: 10px;
-    cursor: pointer;
-    text-align: left;
-    font-size: 15px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: transparent;
+  font-family: var(--font-ui);
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--gray-700);
+  cursor: pointer;
+  text-align: left;
+  transition:
+    background-color var(--t-fast),
+    color var(--t-fast),
+    transform var(--t-fast);
+  outline: none;
 }
 
 .popup-item:hover {
-    background: #e5e7eb;
+  background: var(--blue-50);
+  color: var(--blue-600);
+  transform: translateX(2px);
 }
 
+.popup-item:active {
+  background: var(--blue-100);
+  transform: translateX(2px) scale(0.99);
+}
+
+.popup-item:focus-visible {
+  box-shadow: 0 0 0 2px var(--blue-500);
+  outline: none;
+}
+
+/* Divider before logout */
+.popup-body .popup-logout {
+  margin-top: 4px;
+  padding-top: 10px;
+  position: relative;
+}
+
+.popup-body .popup-logout::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 12px;
+  right: 12px;
+  height: 1px;
+  background: var(--gray-200);
+}
+
+/* Logout button */
 .popup-logout {
-    border: none;
-    background: crimson;
-    color: white;
-    padding: 12px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 15px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: transparent;
+  font-family: var(--font-ui);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--danger);
+  cursor: pointer;
+  text-align: left;
+  transition:
+    background-color var(--t-fast),
+    color var(--t-fast),
+    transform var(--t-fast);
+  outline: none;
+}
+
+.popup-logout:hover {
+  background: var(--danger-bg);
+  color: var(--danger-hover);
+  transform: translateX(2px);
+}
+
+.popup-logout:active {
+  transform: translateX(2px) scale(0.99);
+}
+
+.popup-logout:focus-visible {
+  box-shadow: 0 0 0 2px var(--danger);
+  outline: none;
+}
+
+/* ── 13. Responsive — Tablet (≤ 900px) ──────────────────── */
+@media (max-width: 900px) {
+  .navbar {
+    left: 220px;
+    padding: 0 18px;
+    gap: 12px;
+  }
+
+  .nav-center {
+    max-width: 340px;
+  }
+
+  .profile-info {
+    display: none; /* hide text on tablet, show only avatar */
+  }
+
+  .profile-box {
+    padding: 4px;
+    border-radius: 50%;
+  }
+}
+
+/* ── 14. Responsive — Mobile (≤ 640px) ──────────────────── */
+@media (max-width: 640px) {
+  .navbar {
+    left: 0;
+    padding: 0 14px;
+    gap: 8px;
+  }
+
+  .nav-left h2 {
+    font-size: 16px;
+  }
+
+  /* Collapse search to icon-only on very small screens */
+  .nav-center {
+    flex: 1;
+    max-width: none;
+  }
+
+  .search-box {
+    height: 36px;
+    padding: 0 12px;
+  }
+
+  /* Hide calendar & settings on mobile to save space */
+  .icon-btn:nth-child(3),
+  .icon-btn:nth-child(4) {
+    display: none;
+  }
+
+  .profile-popup {
+    right: -10px;
+    width: 220px;
+  }
+}
+
+/* ── 15. Scrollbar (global polish) ───────────────────────── */
+::-webkit-scrollbar        { width: 5px; height: 5px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  { background: #cbd5e1; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* ── 16. Reduced Motion ──────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .navbar,
+  .profile-popup {
+    animation: none;
+  }
 }

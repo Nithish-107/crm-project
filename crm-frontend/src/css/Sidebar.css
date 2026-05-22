@@ -1,6 +1,31 @@
 /* ============================================================
    CRM Sidebar — Premium SaaS Admin Navigation CSS
    Theme: Deep Navy · Slate-Blue · Minimal & Corporate
+
+   FIX SUMMARY:
+   ─────────────────────────────────────────────────────────
+   1. REMOVED global `body { display: flex }` — was forcing
+      every page into a flex row, crushing content widths.
+
+   2. REMOVED `* { box-sizing; margin; padding }` reset —
+      was overriding existing page resets globally.
+
+   3. REMOVED `.sidebar + * { margin-left }` — was applying
+      left margin to every sibling element on any page, not
+      just the intended content area.
+
+   4. INTRODUCED `.app-layout` wrapper — all layout flex
+      behavior is now scoped inside this container class.
+      Pages that don't use `.app-layout` are unaffected.
+
+   5. INTRODUCED `.main-content` — the only element that
+      receives the compensating left offset, scoped within
+      `.app-layout`. Tables, cards, analytics pages inside
+      it inherit no unexpected sizing or flex rules.
+
+   6. Scoped responsive overrides to `.app-layout` and
+      `.sidebar` only — mobile drawer behavior preserved
+      without touching any global selectors.
    ============================================================ */
 
 /* ── 1. Design Tokens ────────────────────────────────────── */
@@ -42,22 +67,63 @@
   --radius-md:          10px;
 }
 
-/* ── 2. Global Reset (scoped) ────────────────────────────── */
-*,
-*::before,
-*::after {
+/* ── 2. Scoped Box-Sizing Reset ──────────────────────────── */
+/*
+   FIX: Was `*, *::before, *::after { box-sizing: border-box }`
+   — a global reset that collided with existing page stylesheets.
+   Now scoped to only sidebar and layout elements we own.
+*/
+.sidebar,
+.sidebar *,
+.sidebar *::before,
+.sidebar *::after,
+.app-layout,
+.app-layout *,
+.main-content,
+.main-content * {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
 
-/* ── 3. Sidebar Shell ────────────────────────────────────── */
+/* ── 3. App Layout Wrapper ───────────────────────────────── */
+/*
+   FIX: Replaces `body { display: flex }`.
+   Wrap your app shell in <div class="app-layout"> so only
+   the CRM shell gets flex behavior. Other pages that do NOT
+   use .app-layout are completely unaffected.
+   Usage:
+     <div class="app-layout">
+       <nav class="sidebar">…</nav>
+       <div class="main-content">…</div>
+     </div>
+*/
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  /* No width or overflow set here — let pages control their own */
+}
+
+/* ── 4. Main Content Area ────────────────────────────────── */
+/*
+   FIX: Replaces `.sidebar + * { margin-left: var(--sb-width) }`.
+   That rule matched *any* sibling of .sidebar on any page.
+   Now only .main-content (inside .app-layout) gets the offset.
+   Tables, cards, analytics grids inside here are free to size
+   themselves normally — no forced widths or flex side effects.
+*/
+.main-content {
+  margin-left: var(--sb-width);
+  flex: 1;
+  min-width: 0;           /* Prevents flex children from overflowing */
+  min-height: 100vh;
+  /* No overflow:hidden — lets inner pages scroll naturally */
+}
+
+/* ── 5. Sidebar Shell ────────────────────────────────────── */
 .sidebar {
   width: var(--sb-width);
   min-height: 100vh;
   background: var(--sb-bg);
 
-  /* Gradient depth effect */
   background-image:
     linear-gradient(
       180deg,
@@ -74,7 +140,7 @@
   display: flex;
   flex-direction: column;
   gap: 0;
-  position: fixed;
+  position: fixed;       /* Fixed: sidebar never participates in page flow */
   top: 0;
   left: 0;
   bottom: 0;
@@ -82,7 +148,6 @@
   overflow-y: auto;
   overflow-x: hidden;
 
-  /* Entrance animation */
   animation: sidebarIn 380ms var(--ease) both;
 }
 
@@ -109,12 +174,12 @@
   pointer-events: none;
 }
 
-/* Scrollbar inside sidebar */
+/* Sidebar scrollbar */
 .sidebar::-webkit-scrollbar        { width: 3px; }
 .sidebar::-webkit-scrollbar-track  { background: transparent; }
 .sidebar::-webkit-scrollbar-thumb  { background: var(--sb-text-muted); border-radius: 99px; }
 
-/* ── 4. Logo / Brand ─────────────────────────────────────── */
+/* ── 6. Logo / Brand ─────────────────────────────────────── */
 .sidebar-logo {
   padding: 28px 22px 24px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
@@ -122,7 +187,6 @@
   position: relative;
 }
 
-/* Logo glow blob */
 .sidebar-logo::before {
   content: '';
   position: absolute;
@@ -138,6 +202,13 @@
   pointer-events: none;
 }
 
+/*
+   FIX: Was `.sidebar-logo h1` — a descendent selector
+   that could match any <h1> inside the logo even outside
+   expected context. Keeping it as `.sidebar-logo h1` is
+   fine since it's already scoped to .sidebar-logo, but
+   note: do NOT add a bare `h1 {}` rule in this file.
+*/
 .sidebar-logo h1 {
   font-family: 'SF Pro Display', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   font-size: 20px;
@@ -146,7 +217,6 @@
   color: var(--sb-text-primary);
   position: relative;
 
-  /* Two-tone text split via gradient */
   background: linear-gradient(
     135deg,
     #ffffff 0%,
@@ -161,7 +231,6 @@
   gap: 8px;
 }
 
-/* Dot accent before logo text */
 .sidebar-logo h1::before {
   content: '';
   display: inline-block;
@@ -171,13 +240,12 @@
   border-radius: 50%;
   box-shadow: 0 0 0 3px var(--sb-accent-glow);
   flex-shrink: 0;
-  /* Keep the dot colored, not part of gradient */
   -webkit-text-fill-color: initial;
   background-clip: initial;
   -webkit-background-clip: initial;
 }
 
-/* ── 5. Sidebar Sections ─────────────────────────────────── */
+/* ── 7. Sidebar Sections ─────────────────────────────────── */
 .sidebar-section {
   display: flex;
   flex-direction: column;
@@ -191,7 +259,7 @@
   margin-bottom: 4px;
 }
 
-/* ── 6. Section Title Labels ─────────────────────────────── */
+/* ── 8. Section Title Labels ─────────────────────────────── */
 .sidebar-title {
   font-family: 'SF Pro Display', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   font-size: 9.5px;
@@ -202,8 +270,6 @@
   padding: 0 10px 8px;
   margin-bottom: 2px;
   position: relative;
-
-  /* Subtle line after label */
   display: flex;
   align-items: center;
   gap: 8px;
@@ -221,7 +287,7 @@
   border-radius: 1px;
 }
 
-/* ── 7. Navigation Links ─────────────────────────────────── */
+/* ── 9. Navigation Links ─────────────────────────────────── */
 .sidebar-section a {
   display: flex;
   align-items: center;
@@ -241,7 +307,6 @@
     transform var(--t-fast),
     box-shadow var(--t-fast);
 
-  /* Stagger-ready */
   animation: linkIn 320ms var(--ease) both;
 }
 
@@ -261,7 +326,7 @@
   to   { opacity: 1; transform: translateX(0); }
 }
 
-/* Icon inside links (Lucide SVG) */
+/* Icon inside links */
 .sidebar-section a > svg {
   flex-shrink: 0;
   width: 18px;
@@ -342,7 +407,7 @@
   color: var(--sb-text-primary);
 }
 
-/* ── 8. Sidebar Footer Spacer ────────────────────────────── */
+/* ── 10. Sidebar Footer Fade ─────────────────────────────── */
 .sidebar::before {
   content: '';
   display: block;
@@ -360,23 +425,11 @@
   z-index: 1;
 }
 
-/* ── 9. Main Content Offset ──────────────────────────────── */
-/* Push your main app content right when sidebar is present */
-body {
-  display: flex;
-  font-family: 'SF Pro Display', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-  background: #f1f5f9;
-  min-height: 100vh;
-}
-
-/* The sibling element of .sidebar gets auto margin */
-.sidebar + * {
-  margin-left: var(--sb-width);
-  flex: 1;
-  min-width: 0;
-}
-
-/* ── 10. Responsive — Tablet (≤ 900px) ──────────────────── */
+/* ── 11. Responsive — Tablet (≤ 900px) ──────────────────── */
+/*
+   FIX: Scoped entirely to sidebar-related rules.
+   No global width or layout overrides.
+*/
 @media (max-width: 900px) {
   :root {
     --sb-width: 220px;
@@ -392,27 +445,36 @@ body {
   }
 }
 
-/* ── 11. Responsive — Mobile (≤ 640px) ──────────────────── */
+/* ── 12. Responsive — Mobile (≤ 640px) ──────────────────── */
+/*
+   FIX: Mobile sidebar becomes a full-screen overlay drawer.
+   .main-content loses its margin-left (sidebar is overlaid,
+   not in flow). No global body or page selectors touched.
+*/
 @media (max-width: 640px) {
   :root {
     --sb-width: 100vw;
   }
 
   .sidebar {
-    /* On mobile, sidebar becomes a full-screen overlay drawer */
-    width: 100vw;
+    width: 280px;               /* Fixed drawer width on mobile */
     min-height: 100dvh;
     transform: translateX(-100%);
     transition: transform var(--t-base);
     animation: none;
   }
 
-  /* When a parent adds .sidebar-open class, drawer slides in */
-  .sidebar-open .sidebar {
+  /* Slide drawer in when .app-layout receives .sidebar-open */
+  .app-layout.sidebar-open .sidebar {
     transform: translateX(0);
   }
 
-  .sidebar + * {
+  /*
+     FIX: On mobile the sidebar overlays content — main-content
+     should NOT have a margin-left. Scoped to .app-layout so
+     it doesn't affect any other page layout.
+  */
+  .app-layout .main-content {
     margin-left: 0;
   }
 
@@ -430,7 +492,7 @@ body {
   }
 }
 
-/* ── 12. Reduced Motion ──────────────────────────────────── */
+/* ── 13. Reduced Motion ──────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .sidebar,
   .sidebar-section a {
@@ -442,8 +504,14 @@ body {
   }
 }
 
-/* ── 13. Selection ───────────────────────────────────────── */
-::selection {
+/* ── 14. Text Selection (scoped) ─────────────────────────── */
+/*
+   FIX: Was `::selection` — a global pseudo-element that
+   changed text selection colour across every page.
+   Scoped to .sidebar and .app-layout only.
+*/
+.sidebar ::selection,
+.app-layout ::selection {
   background: rgba(59, 130, 246, 0.25);
   color: #ffffff;
 }
