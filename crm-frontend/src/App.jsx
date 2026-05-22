@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useLocation
+} from "react-router-dom";
 
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
@@ -21,60 +26,113 @@ import "./css/responsive.css";
 import "./App.css";
 
 function AppContent() {
+
   const location = useLocation();
 
-  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  const isLoggedIn =
+    localStorage.getItem("isLoggedIn");
 
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] =
+    useState(false);
 
   useEffect(() => {
+
     setSidebarOpen(false);
+
   }, [location]);
 
   return (
     <>
       {isLoggedIn ? (
+
         <div className={`app-layout ${sidebarOpen ? "sidebar-open" : ""}`}>
+
           <Sidebar />
 
           <div className="main-content">
-            <Navbar setSidebarOpen={setSidebarOpen} />
+
+            <Navbar
+              setSidebarOpen={setSidebarOpen}
+            />
 
             <div className="page-content">
+
               <Routes>
+
+              
+
                 <Route
-                  path="/"
-                  element={<Navigate to="/dashboard" replace />}
+                  path="/dashboard"
+                  element={<Dashboard />}
                 />
 
-                <Route path="/dashboard" element={<Dashboard />} />
+                <Route
+                  path="/customers"
+                  element={<Customers />}
+                />
 
-                <Route path="/customers" element={<Customers />} />
+                <Route
+                  path="/leads"
+                  element={<Leads />}
+                />
 
-                <Route path="/leads" element={<Leads />} />
+                <Route
+                  path="/tasks"
+                  element={<Tasks />}
+                />
 
-                <Route path="/tasks" element={<Tasks />} />
+                <Route
+                  path="/register"
+                  element={<Register />}
+                />
 
-                <Route path="/register" element={<Register />} />
+                <Route
+                  path="/users"
+                  element={<Users />}
+                />
 
-                <Route path="/users" element={<Users />} />
+                <Route
+                  path="/meetings"
+                  element={<Meetings />}
+                />
 
-                <Route path="/meetings" element={<Meetings />} />
+                <Route
+                  path="/contacts"
+                  element={<Contacts />}
+                />
 
-                <Route path="/contacts" element={<Contacts />} />
+                <Route
+                  path="/deals"
+                  element={<Deals />}
+                />
 
-                <Route path="/deals" element={<Deals />} />
+                <Route
+                  path="/deals/:id"
+                  element={<DealDetails />}
+                />
 
-                <Route path="/deals/:id" element={<DealDetails />} />
               </Routes>
-            </div>
-          </div>
-        </div>
-      ) : (
-        <Routes>
-          <Route path="/" element={<Login />} />
 
-          <Route path="/register" element={<Register />} />
+            </div>
+
+          </div>
+
+        </div>
+
+      ) : (
+
+        <Routes>
+
+          <Route
+            path="/"
+            element={<Login />}
+          />
+
+          <Route
+            path="/register"
+            element={<Register />}
+          />
+
         </Routes>
       )}
     </>
@@ -82,9 +140,13 @@ function AppContent() {
 }
 
 function App() {
+
   return (
+
     <BrowserRouter>
+
       <AppContent />
+
     </BrowserRouter>
   );
 }
