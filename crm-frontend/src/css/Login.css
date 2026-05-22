@@ -1,136 +1,436 @@
+/* ============================================================
+   CRM Login Page — Premium SaaS Authentication UI
+   Theme: Deep Charcoal · Midnight Blue · Corporate Refined
+   ============================================================ */
 
+/* ── 1. Design Tokens ────────────────────────────────────── */
+:root {
+  /* Background palette */
+  --lg-bg-base:         #060d1a;
+  --lg-bg-mid:          #0b1629;
+  --lg-bg-card:         #0f1e35;
+  --lg-card-border:     rgba(99, 160, 255, 0.10);
+  --lg-card-shadow:     0 32px 80px rgba(0, 0, 0, 0.55),
+                        0 0 0 1px rgba(99, 160, 255, 0.07);
 
-.login-page{
-    font-family: "Poppins", sans-serif;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, #141e30, #243b55);
-    overflow: hidden;
-    position: relative;
+  /* Text */
+  --lg-text-primary:    #eaf0fb;
+  --lg-text-secondary:  #8ca3bf;
+  --lg-text-muted:      #4a637f;
+  --lg-text-link:       #5aadff;
+
+  /* Accent */
+  --lg-accent:          #3b82f6;
+  --lg-accent-light:    #60a5fa;
+  --lg-accent-glow:     rgba(59, 130, 246, 0.22);
+  --lg-accent-hover:    #2563eb;
+
+  /* Input */
+  --lg-input-bg:        rgba(255, 255, 255, 0.04);
+  --lg-input-border:    rgba(99, 160, 255, 0.14);
+  --lg-input-focus-bg:  rgba(59, 130, 246, 0.07);
+  --lg-input-focus-bdr: rgba(59, 130, 246, 0.55);
+
+  /* Transitions */
+  --ease:               cubic-bezier(0.22, 1, 0.36, 1);
+  --t-fast:             160ms var(--ease);
+  --t-base:             260ms var(--ease);
+  --t-slow:             420ms var(--ease);
+
+  /* Radius */
+  --radius-sm:          8px;
+  --radius-md:          14px;
+  --radius-lg:          20px;
 }
 
-.login-page::before,
-.login-page::after{
-    content: "";
-    position: absolute;
-    width: 350px;
-    height: 350px;
-    border-radius: 50%;
-    filter: blur(120px);
-    z-index: 0;
+/* ── 2. Font Import ──────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Sora:wght@700;800&display=swap');
+
+/* ── 3. Base Reset (scoped to login page) ────────────────── */
+.login-page *,
+.login-page *::before,
+.login-page *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.login-page::before{
-    background: #00c6ff;
-    top: -100px;
-    left: -100px;
+/* ── 4. Page Shell ───────────────────────────────────────── */
+/*
+   Full-viewport centered layout. Background uses a layered
+   radial mesh — two accent glows from opposite corners give
+   depth without any external image assets.
+*/
+.login-page {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  position: relative;
+  overflow: hidden;
+  font-family: 'DM Sans', 'Segoe UI', sans-serif;
+
+  /* Layered mesh background */
+  background-color: var(--lg-bg-base);
+  background-image:
+    radial-gradient(
+      ellipse 70% 55% at 15% 10%,
+      rgba(59, 130, 246, 0.13) 0%,
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse 60% 50% at 85% 90%,
+      rgba(16, 60, 130, 0.18) 0%,
+      transparent 65%
+    ),
+    linear-gradient(
+      160deg,
+      var(--lg-bg-base) 0%,
+      var(--lg-bg-mid) 50%,
+      var(--lg-bg-base) 100%
+    );
 }
 
-.login-page::after{
-    background: #0072ff;
-    bottom: -100px;
-    right: -100px;
+/* Decorative grid overlay — gives the page a technical SaaS feel */
+.login-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(99, 160, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 160, 255, 0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
 }
 
-
-.login-form{
-    width: 380px;
-    padding: 45px 35px;
-    border-radius: 20px;
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255,255,255,0.15);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.35);
-    text-align: center;
-    animation: fadeIn 0.8s ease;
-    position: relative;
-    z-index: 1;
+/* Bottom edge fade so grid doesn't look cut off */
+.login-page::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 180px;
+  background: linear-gradient(0deg, var(--lg-bg-base) 0%, transparent 100%);
+  pointer-events: none;
 }
 
+/* ── 5. Login Title ──────────────────────────────────────── */
+.login-title {
+  font-family: 'Sora', 'Segoe UI', sans-serif;
+  font-size: clamp(28px, 5vw, 38px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  margin-bottom: 36px;
+  position: relative;
+  z-index: 1;
 
-.login-title{
-    text-align: center;
-    margin-bottom: 30px;
-    color: #ffffff;
-    font-size: 34px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    z-index: 1;
+  /* Two-tone gradient text */
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #93c5fd 55%,
+    #60a5fa 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
+  /* Entrance animation */
+  animation: fadeSlideDown 500ms var(--ease) both;
 }
 
-.login-input{
-    width: 100%;
-    padding: 14px 16px;
-    margin-top: 10px;
-    border: none;
-    outline: none;
-    border-radius: 12px;
-    background: rgba(255,255,255,0.12);
-    color: white;
+@keyframes fadeSlideDown {
+  from { opacity: 0; transform: translateY(-18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── 6. Login Form Card ──────────────────────────────────── */
+/*
+   The card uses a frosted-glass style surface with a subtle
+   blue-tinted border. A soft glow radiates from beneath it.
+*/
+.login-form {
+  width: 100%;
+  max-width: 420px;
+  background: var(--lg-bg-card);
+  border: 1px solid var(--lg-card-border);
+  border-radius: var(--radius-lg);
+  padding: 44px 40px 36px;
+  box-shadow: var(--lg-card-shadow);
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+
+  /* Entrance animation — slightly delayed after title */
+  animation: fadeSlideUp 540ms var(--ease) 80ms both;
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Accent glow beneath the card */
+.login-form::before {
+  content: '';
+  position: absolute;
+  bottom: -30px;
+  left: 10%;
+  right: 10%;
+  height: 60px;
+  background: radial-gradient(
+    ellipse 80% 100% at 50% 100%,
+    var(--lg-accent-glow) 0%,
+    transparent 70%
+  );
+  filter: blur(16px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Top shimmer line across card */
+.login-form::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 15%;
+  right: 15%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(147, 197, 253, 0.35) 40%,
+    rgba(96, 165, 250, 0.35) 60%,
+    transparent 100%
+  );
+  border-radius: 99px;
+}
+
+/* ── 7. Input Fields ─────────────────────────────────────── */
+.login-input {
+  width: 100%;
+  padding: 13px 16px;
+  background: var(--lg-input-bg);
+  border: 1px solid var(--lg-input-border);
+  border-radius: var(--radius-sm);
+  font-family: 'DM Sans', 'Segoe UI', sans-serif;
+  font-size: 14.5px;
+  font-weight: 400;
+  color: var(--lg-text-primary);
+  outline: none;
+  transition:
+    border-color var(--t-fast),
+    background-color var(--t-fast),
+    box-shadow var(--t-fast);
+  display: block;
+}
+
+.login-input::placeholder {
+  color: var(--lg-text-muted);
+  font-weight: 400;
+}
+
+/* Focus state — prominent but not noisy */
+.login-input:focus {
+  background: var(--lg-input-focus-bg);
+  border-color: var(--lg-input-focus-bdr);
+  box-shadow:
+    0 0 0 3px rgba(59, 130, 246, 0.14),
+    0 1px 4px rgba(0, 0, 0, 0.2);
+  color: #ffffff;
+}
+
+/* Autofill override — prevents browser yellow flash */
+.login-input:-webkit-autofill,
+.login-input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 40px #0f1e35 inset;
+  -webkit-text-fill-color: var(--lg-text-primary);
+  transition: background-color 9999s ease;
+}
+
+/*
+   Spacing between inputs and button.
+   The JSX uses <br> tags between inputs; we suppress them
+   and use margin on the inputs directly so layout is cleaner.
+*/
+.login-form br {
+  display: none;
+}
+
+/* First input — email */
+.login-form .login-input:first-of-type {
+  margin-bottom: 14px;
+}
+
+/* Second input — password */
+.login-form .login-input:last-of-type {
+  margin-bottom: 24px;
+}
+
+/* ── 8. Login Button ─────────────────────────────────────── */
+.login-button {
+  width: 100%;
+  padding: 13px 20px;
+  background: linear-gradient(
+    135deg,
+    var(--lg-accent) 0%,
+    #1d6fe8 100%
+  );
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: 'DM Sans', 'Segoe UI', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 24px;
+  transition:
+    background var(--t-fast),
+    transform var(--t-fast),
+    box-shadow var(--t-fast);
+
+  /* Soft glow on rest state */
+  box-shadow:
+    0 4px 16px rgba(59, 130, 246, 0.30),
+    0 1px 0 rgba(255, 255, 255, 0.10) inset;
+}
+
+/* Shimmer sweep on hover */
+.login-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.12) 50%,
+    transparent 70%
+  );
+  background-size: 200% 100%;
+  background-position: -100% 0;
+  transition: background-position 0.45s ease;
+}
+
+.login-button:hover::before {
+  background-position: 200% 0;
+}
+
+/* Hover lift */
+.login-button:hover {
+  background: linear-gradient(
+    135deg,
+    var(--lg-accent-light) 0%,
+    var(--lg-accent) 100%
+  );
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 28px rgba(59, 130, 246, 0.40),
+    0 1px 0 rgba(255, 255, 255, 0.12) inset;
+}
+
+/* Press / active state */
+.login-button:active {
+  transform: translateY(0);
+  box-shadow:
+    0 2px 10px rgba(59, 130, 246, 0.25),
+    0 1px 0 rgba(255, 255, 255, 0.08) inset;
+  transition-duration: 80ms;
+}
+
+/* Keyboard focus ring */
+.login-button:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 3px rgba(59, 130, 246, 0.50),
+    0 4px 16px rgba(59, 130, 246, 0.30);
+}
+
+/* ── 9. Register Prompt Paragraph ────────────────────────── */
+.login-form p {
+  font-family: 'DM Sans', 'Segoe UI', sans-serif;
+  font-size: 13.5px;
+  font-weight: 400;
+  color: var(--lg-text-secondary);
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* The Register <span> already has inline styles in JSX;
+   this block enhances it with transitions where possible */
+.login-form p span {
+  display: inline-block;
+  font-weight: 500;
+  transition: color var(--t-fast), opacity var(--t-fast);
+}
+
+.login-form p span:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(90, 173, 255, 0.5);
+}
+
+/* ── 10. Responsive — Tablet (≤ 640px) ──────────────────── */
+@media (max-width: 640px) {
+  .login-form {
+    padding: 36px 28px 30px;
+    border-radius: var(--radius-md);
+  }
+
+  .login-title {
+    font-size: 30px;
+    margin-bottom: 28px;
+  }
+
+  .login-input {
+    font-size: 15px;      /* Prevents iOS zoom on focus (≥ 16px browser default) */
+    padding: 14px 15px;
+  }
+
+  .login-button {
     font-size: 15px;
-    transition: 0.3s ease;
-    border: 1px solid transparent;
+    padding: 14px 20px;
+  }
 }
 
-.login-input::placeholder{
-    color: rgba(255,255,255,0.7);
+/* ── 11. Responsive — Small Mobile (≤ 375px) ─────────────── */
+@media (max-width: 375px) {
+  .login-page {
+    padding: 20px 12px;
+  }
+
+  .login-form {
+    padding: 30px 20px 26px;
+  }
+
+  .login-title {
+    font-size: 26px;
+    margin-bottom: 24px;
+  }
 }
 
-.login-input:focus{
-    border-color: #00c6ff;
-    box-shadow: 0 0 12px rgba(0,198,255,0.5);
-    background: rgba(255,255,255,0.15);
-}
+/* ── 12. Reduced Motion ──────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .login-title,
+  .login-form {
+    animation: none;
+  }
 
+  .login-button:hover {
+    transform: none;
+  }
 
-.login-button{
-    width: 100%;
-    padding: 14px;
-    margin-top: 15px;
-    border: none;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #00c6ff, #0072ff);
-    color: white;
-    font-size: 17px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    letter-spacing: 0.5px;
-}
-
-.login-button:hover{
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0,114,255,0.4);
-}
-
-.login-button:active{
-    transform: scale(0.98);
-}
-
-
-@keyframes fadeIn{
-    from{
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to{
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-
-@media(max-width: 480px){
-
-    .login-form{
-        width: 90%;
-        padding: 35px 25px;
-    }
-
-    .login-title{
-        font-size: 28px;
-    }
+  .login-input {
+    transition: border-color 0ms, box-shadow 0ms;
+  }
 }
