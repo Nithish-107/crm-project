@@ -14,7 +14,7 @@ import Meetings from "./pages/Meetings";
 import Contacts from "./pages/Contacts";
 import Deals from "./pages/Deals";
 import DealDetails from "./pages/DealDetails";
-
+import "./css/responsive.css";
 import "./App.css";
 
 function App() {
