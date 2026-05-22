@@ -1,87 +1,449 @@
-.sidebar {
+/* ============================================================
+   CRM Sidebar — Premium SaaS Admin Navigation CSS
+   Theme: Deep Navy · Slate-Blue · Minimal & Corporate
+   ============================================================ */
 
-    width: 260px;
+/* ── 1. Design Tokens ────────────────────────────────────── */
+:root {
+  /* Sidebar palette */
+  --sb-bg:              #0f172a;
+  --sb-bg-deeper:       #080f1e;
+  --sb-surface:         rgba(255, 255, 255, 0.04);
+  --sb-surface-hover:   rgba(255, 255, 255, 0.07);
+  --sb-active-bg:       rgba(59, 130, 246, 0.15);
+  --sb-active-border:   #3b82f6;
 
-    min-height: 100vh;
+  /* Text */
+  --sb-text-primary:    #e2e8f0;
+  --sb-text-secondary:  #94a3b8;
+  --sb-text-muted:      #475569;
+  --sb-text-active:     #ffffff;
 
-    background: #1e293b;
+  /* Brand accent */
+  --sb-accent:          #3b82f6;
+  --sb-accent-glow:     rgba(59, 130, 246, 0.2);
+  --sb-accent-soft:     rgba(59, 130, 246, 0.1);
 
-    color: white;
+  /* Dimensions */
+  --sb-width:           248px;
+  --sb-collapsed:       64px;
 
-    padding: 20px;
+  /* Shadows */
+  --sb-shadow:          4px 0 24px rgba(0, 0, 0, 0.35),
+                        1px 0 0 rgba(255, 255, 255, 0.04);
 
-    display: flex;
+  /* Transitions */
+  --ease:               cubic-bezier(0.22, 1, 0.36, 1);
+  --t-fast:             160ms var(--ease);
+  --t-base:             240ms var(--ease);
 
-    flex-direction: column;
+  /* Radius */
+  --radius-sm:          6px;
+  --radius-md:          10px;
 }
 
-.sidebar-logo {
+/* ── 2. Global Reset (scoped) ────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-    margin-bottom: 35px;
+/* ── 3. Sidebar Shell ────────────────────────────────────── */
+.sidebar {
+  width: var(--sb-width);
+  min-height: 100vh;
+  background: var(--sb-bg);
+
+  /* Gradient depth effect */
+  background-image:
+    linear-gradient(
+      180deg,
+      rgba(59, 130, 246, 0.06) 0%,
+      transparent 40%
+    ),
+    linear-gradient(
+      180deg,
+      var(--sb-bg) 0%,
+      var(--sb-bg-deeper) 100%
+    );
+
+  box-shadow: var(--sb-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  /* Entrance animation */
+  animation: sidebarIn 380ms var(--ease) both;
+}
+
+@keyframes sidebarIn {
+  from { transform: translateX(-100%); opacity: 0; }
+  to   { transform: translateX(0);     opacity: 1; }
+}
+
+/* Thin right-edge shimmer border */
+.sidebar::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: var(--sb-width);
+  width: 1px;
+  bottom: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(59, 130, 246, 0.25) 30%,
+    rgba(59, 130, 246, 0.12) 70%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* Scrollbar inside sidebar */
+.sidebar::-webkit-scrollbar        { width: 3px; }
+.sidebar::-webkit-scrollbar-track  { background: transparent; }
+.sidebar::-webkit-scrollbar-thumb  { background: var(--sb-text-muted); border-radius: 99px; }
+
+/* ── 4. Logo / Brand ─────────────────────────────────────── */
+.sidebar-logo {
+  padding: 28px 22px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  flex-shrink: 0;
+  position: relative;
+}
+
+/* Logo glow blob */
+.sidebar-logo::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: radial-gradient(
+    ellipse 80% 60% at 40% 0%,
+    rgba(59, 130, 246, 0.18) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
 }
 
 .sidebar-logo h1 {
+  font-family: 'SF Pro Display', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--sb-text-primary);
+  position: relative;
 
-    font-size: 42px;
-
-    color: white;
-
-    font-weight: bold;
+  /* Two-tone text split via gradient */
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #93c5fd 60%,
+    #60a5fa 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.sidebar-title {
-
-    font-size: 16px;
-
-    color: #94a3b8;
-
-    margin-bottom: 14px;
-
-    letter-spacing: 1px;
-
-    font-weight: 600;
+/* Dot accent before logo text */
+.sidebar-logo h1::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--sb-accent);
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px var(--sb-accent-glow);
+  flex-shrink: 0;
+  /* Keep the dot colored, not part of gradient */
+  -webkit-text-fill-color: initial;
+  background-clip: initial;
+  -webkit-background-clip: initial;
 }
 
+/* ── 5. Sidebar Sections ─────────────────────────────────── */
 .sidebar-section {
-
-    margin-bottom: 35px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 20px 12px 8px;
 }
 
-.sidebar a {
+.sidebar-section:not(:last-child) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  padding-bottom: 16px;
+  margin-bottom: 4px;
+}
 
-    display: flex;
+/* ── 6. Section Title Labels ─────────────────────────────── */
+.sidebar-title {
+  font-family: 'SF Pro Display', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sb-text-muted);
+  padding: 0 10px 8px;
+  margin-bottom: 2px;
+  position: relative;
 
-    align-items: center;
+  /* Subtle line after label */
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
-    gap: 14px;
+.sidebar-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    transparent 100%
+  );
+  border-radius: 1px;
+}
 
-    text-decoration: none;
+/* ── 7. Navigation Links ─────────────────────────────────── */
+.sidebar-section a {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 9px 12px;
+  border-radius: var(--radius-md);
+  font-family: 'SF Pro Display', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--sb-text-secondary);
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  transition:
+    color var(--t-fast),
+    background-color var(--t-fast),
+    transform var(--t-fast),
+    box-shadow var(--t-fast);
 
-    color: #e2e8f0;
+  /* Stagger-ready */
+  animation: linkIn 320ms var(--ease) both;
+}
 
-    padding: 14px 16px;
+/* Staggered link entrance */
+.sidebar-section:nth-child(1) a:nth-child(2) { animation-delay: 0.08s; }
 
-    border-radius: 10px;
+.sidebar-section:nth-child(2) a:nth-child(2) { animation-delay: 0.12s; }
+.sidebar-section:nth-child(2) a:nth-child(3) { animation-delay: 0.16s; }
+.sidebar-section:nth-child(2) a:nth-child(4) { animation-delay: 0.20s; }
+.sidebar-section:nth-child(2) a:nth-child(5) { animation-delay: 0.24s; }
+.sidebar-section:nth-child(2) a:nth-child(6) { animation-delay: 0.28s; }
+.sidebar-section:nth-child(2) a:nth-child(7) { animation-delay: 0.32s; }
+.sidebar-section:nth-child(2) a:nth-child(8) { animation-delay: 0.36s; }
 
-    margin-bottom: 12px;
+@keyframes linkIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
 
-    transition: 0.3s;
+/* Icon inside links (Lucide SVG) */
+.sidebar-section a > svg {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  transition: color var(--t-fast), transform var(--t-fast);
+  opacity: 0.7;
+}
 
+/* Hover state */
+.sidebar-section a:hover {
+  color: var(--sb-text-primary);
+  background-color: var(--sb-surface-hover);
+  transform: translateX(3px);
+}
+
+.sidebar-section a:hover > svg {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Hover shimmer sweep */
+.sidebar-section a::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.04) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  background-position: -100% 0;
+  transition: background-position 0.4s ease;
+  pointer-events: none;
+}
+
+.sidebar-section a:hover::before {
+  background-position: 200% 0;
+}
+
+/* Active / current page link */
+.sidebar-section a.active,
+.sidebar-section a[aria-current="page"] {
+  color: var(--sb-text-active);
+  background: var(--sb-active-bg);
+  box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.2);
+  transform: translateX(0);
+}
+
+.sidebar-section a.active > svg,
+.sidebar-section a[aria-current="page"] > svg {
+  opacity: 1;
+  color: var(--sb-accent);
+}
+
+/* Active left-bar indicator */
+.sidebar-section a.active::after,
+.sidebar-section a[aria-current="page"]::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 20%;
+  bottom: 20%;
+  width: 3px;
+  background: var(--sb-active-border);
+  border-radius: 0 3px 3px 0;
+  box-shadow: 0 0 8px var(--sb-accent-glow);
+}
+
+/* Focus ring for keyboard nav */
+.sidebar-section a:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--sb-accent-glow),
+    inset 0 0 0 1px var(--sb-accent);
+  color: var(--sb-text-primary);
+}
+
+/* ── 8. Sidebar Footer Spacer ────────────────────────────── */
+.sidebar::before {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(
+    0deg,
+    var(--sb-bg-deeper) 0%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── 9. Main Content Offset ──────────────────────────────── */
+/* Push your main app content right when sidebar is present */
+body {
+  display: flex;
+  font-family: 'SF Pro Display', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  background: #f1f5f9;
+  min-height: 100vh;
+}
+
+/* The sibling element of .sidebar gets auto margin */
+.sidebar + * {
+  margin-left: var(--sb-width);
+  flex: 1;
+  min-width: 0;
+}
+
+/* ── 10. Responsive — Tablet (≤ 900px) ──────────────────── */
+@media (max-width: 900px) {
+  :root {
+    --sb-width: 220px;
+  }
+
+  .sidebar-logo h1 {
     font-size: 18px;
+  }
 
-    font-weight: 500;
+  .sidebar-section a {
+    font-size: 13px;
+    padding: 8px 11px;
+  }
 }
 
-.sidebar a svg {
+/* ── 11. Responsive — Mobile (≤ 640px) ──────────────────── */
+@media (max-width: 640px) {
+  :root {
+    --sb-width: 100vw;
+  }
 
-    width: 22px;
+  .sidebar {
+    /* On mobile, sidebar becomes a full-screen overlay drawer */
+    width: 100vw;
+    min-height: 100dvh;
+    transform: translateX(-100%);
+    transition: transform var(--t-base);
+    animation: none;
+  }
 
-    height: 22px;
+  /* When a parent adds .sidebar-open class, drawer slides in */
+  .sidebar-open .sidebar {
+    transform: translateX(0);
+  }
+
+  .sidebar + * {
+    margin-left: 0;
+  }
+
+  .sidebar-section a {
+    font-size: 15px;
+    padding: 12px 16px;
+  }
+
+  .sidebar-logo {
+    padding: 32px 24px 22px;
+  }
+
+  .sidebar-logo h1 {
+    font-size: 22px;
+  }
 }
 
-.sidebar a:hover {
+/* ── 12. Reduced Motion ──────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .sidebar,
+  .sidebar-section a {
+    animation: none;
+  }
 
-    background: #334155;
+  .sidebar-section a:hover {
+    transform: none;
+  }
+}
 
-    color: white;
+/* ── 13. Selection ───────────────────────────────────────── */
+::selection {
+  background: rgba(59, 130, 246, 0.25);
+  color: #ffffff;
 }
