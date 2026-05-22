@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-// import '../css/Customer.css';
+import '../css/Customer.css';
 
 function Customers() {
 
