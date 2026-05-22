@@ -320,8 +320,12 @@ body {
   flex-direction: column;
   gap: 16px;
   min-height: 320px;
+  max-height: 520px;
   position: relative;
-  overflow: hidden;
+  /* overflow-y: auto allows chart & activities to scroll if needed,
+     while NOT clipping chart canvas rendering */
+  overflow-y: auto;
+  overflow-x: hidden;
   transition: box-shadow var(--t-base);
   animation: cardSlide var(--t-slow) 0.35s both;
 }
@@ -330,18 +334,14 @@ body {
   box-shadow: var(--shadow-md);
 }
 
-/* Subtle top accent bar */
+/* Subtle top accent bar — using border-image so it works with overflow-y:auto */
 .dashboard-box::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg,
-    var(--blue-400) 0%,
-    var(--blue-600) 60%,
-    transparent 100%);
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  opacity: 0.6;
+  display: none; /* disabled — using border-top below instead */
+}
+
+.dashboard-box {
+  border-top: 3px solid transparent;
+  border-image: linear-gradient(90deg, var(--blue-400) 0%, var(--blue-600) 60%, transparent 100%) 1;
 }
 
 .dashboard-box > h2 {
@@ -416,18 +416,22 @@ body {
   padding: 40px 0;
 }
 
-/* ── 10. Chart Box  ──────────────────────────────────────── */
-/* The chart box (second dashboard-box) gets a slightly taller min-height */
+/* ── 10. Chart Box ───────────────────────────────────────── */
+/* Chart box needs overflow visible so canvas renders correctly */
 .dashboard-box:nth-child(2) {
-  min-height: 360px;
+  min-height: 400px;
+  max-height: none;      /* let the chart dictate its own height */
+  overflow: visible;     /* CRITICAL: prevents canvas/SVG from being clipped */
 }
 
-/* DashboardChart child fill */
+/* DashboardChart child — fill available space */
 .dashboard-box:nth-child(2) > *:last-child {
   flex: 1;
+  min-height: 280px;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
 }
 
 /* ── 11. Scrollbar ───────────────────────────────────────── */
