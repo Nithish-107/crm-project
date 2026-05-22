@@ -15,6 +15,8 @@ import Contacts from "./pages/Contacts";
 import Deals from "./pages/Deals";
 import DealDetails from "./pages/DealDetails";
 
+import "./App.css";
+
 function App() {
   const isLoggedIn = localStorage.getItem("isLoggedIn");
   const role = localStorage.getItem("role");
@@ -22,22 +24,23 @@ function App() {
   return (
     <BrowserRouter>
       {isLoggedIn ? (
-        <div style={{ display: "flex" }}>
+        <div className="app-layout">
+          
+          {/* Sidebar */}
           <Sidebar />
 
-          <div style={{ flex: 1 }}>
+          {/* Main Content */}
+          <div className="main-content">
+
+            {/* Navbar */}
             <Navbar />
 
-            <div style={{ padding: "20px" }}>
+            {/* Page Content */}
+            <div className="page-content">
               <Routes>
                 <Route path="/dashboard" element={<Dashboard />} />
 
                 <Route path="/customers" element={<Customers />} />
-
-                {/* <Route
-                  path="/leads"
-                  element={role === "ADMIN" ? <Leads /> : <Dashboard />}
-                /> */}
 
                 <Route path="/leads" element={<Leads />} />
 
@@ -50,10 +53,13 @@ function App() {
                 <Route path="/meetings" element={<Meetings />} />
 
                 <Route path="/contacts" element={<Contacts />} />
+
                 <Route path="/deals" element={<Deals />} />
+
                 <Route path="/deals/:id" element={<DealDetails />} />
               </Routes>
             </div>
+
           </div>
         </div>
       ) : (
