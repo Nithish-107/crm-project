@@ -1,4 +1,11 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState, useEffect } from "react";
+
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useLocation
+} from "react-router-dom";
 
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
@@ -14,60 +21,130 @@ import Meetings from "./pages/Meetings";
 import Contacts from "./pages/Contacts";
 import Deals from "./pages/Deals";
 import DealDetails from "./pages/DealDetails";
-import { useState } from "react";
+
 import "./css/responsive.css";
 import "./App.css";
 
-function App() {
-  const isLoggedIn = localStorage.getItem("isLoggedIn");
-  const role = localStorage.getItem("role");
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+function AppContent() {
+
+  const location = useLocation();
+
+  const isLoggedIn =
+    localStorage.getItem("isLoggedIn");
+
+  const [sidebarOpen, setSidebarOpen] =
+    useState(false);
+
+  useEffect(() => {
+
+    setSidebarOpen(false);
+
+  }, [location]);
 
   return (
-    <BrowserRouter>
+    <>
       {isLoggedIn ? (
+
         <div className={`app-layout ${sidebarOpen ? "sidebar-open" : ""}`}>
-          
-         
-          <Sidebar sidebarOpen={sidebarOpen} />
+
+          <Sidebar />
 
           <div className="main-content">
 
-            
-            <Navbar setSidebarOpen={setSidebarOpen} />
+            <Navbar
+              setSidebarOpen={setSidebarOpen}
+            />
 
             <div className="page-content">
+
               <Routes>
-                <Route path="/dashboard" element={<Dashboard />} />
 
-                <Route path="/customers" element={<Customers />} />
+                <Route
+                  path="/dashboard"
+                  element={<Dashboard />}
+                />
 
-                <Route path="/leads" element={<Leads />} />
+                <Route
+                  path="/customers"
+                  element={<Customers />}
+                />
 
-                <Route path="/tasks" element={<Tasks />} />
+                <Route
+                  path="/leads"
+                  element={<Leads />}
+                />
 
-                <Route path="/register" element={<Register />} />
+                <Route
+                  path="/tasks"
+                  element={<Tasks />}
+                />
 
-                <Route path="/users" element={<Users />} />
+                <Route
+                  path="/register"
+                  element={<Register />}
+                />
 
-                <Route path="/meetings" element={<Meetings />} />
+                <Route
+                  path="/users"
+                  element={<Users />}
+                />
 
-                <Route path="/contacts" element={<Contacts />} />
+                <Route
+                  path="/meetings"
+                  element={<Meetings />}
+                />
 
-                <Route path="/deals" element={<Deals />} />
+                <Route
+                  path="/contacts"
+                  element={<Contacts />}
+                />
 
-                <Route path="/deals/:id" element={<DealDetails />} />
+                <Route
+                  path="/deals"
+                  element={<Deals />}
+                />
+
+                <Route
+                  path="/deals/:id"
+                  element={<DealDetails />}
+                />
+
               </Routes>
+
             </div>
 
           </div>
+
         </div>
+
       ) : (
+
         <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+
+          <Route
+            path="/"
+            element={<Login />}
+          />
+
+          <Route
+            path="/register"
+            element={<Register />}
+          />
+
         </Routes>
       )}
+    </>
+  );
+}
+
+function App() {
+
+  return (
+
+    <BrowserRouter>
+
+      <AppContent />
+
     </BrowserRouter>
   );
 }
