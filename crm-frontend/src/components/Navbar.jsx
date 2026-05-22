@@ -76,7 +76,7 @@ function Navbar() {
 
             <div className="nav-left">
 
-                <h2>Home</h2>
+                {/* <h2>Home</h2> */}
 
             </div>
 
