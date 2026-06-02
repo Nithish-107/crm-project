@@ -4,7 +4,7 @@ import "../css/Tasks.css";
 
 function Tasks() {
   const [tasks, setTasks] = useState([]);
-  const role = localStorage.getItem("role");
+  const role = localStorage.getItem("role")?.trim().toLowerCase();
   const [editingId, setEditingId] = useState(null);
   const [users, setUsers] = useState([]);
   const userName = localStorage.getItem("userName");
@@ -17,7 +17,7 @@ function Tasks() {
   const fetchTasks = async () => {
     const response = await axios.get("https://crm-project-kizo.onrender.com/tasks");
 
-    if (role === "ADMIN") {
+    if (role === "admin" || role === "role_admin") {
       setTasks(response.data);
     } else {
       const filteredTasks = response.data.filter(
@@ -137,9 +137,13 @@ function Tasks() {
 
   return (
     <div className="tasks-container">
-      <h1>{role === "ADMIN" ? "Tasks" : "My Tasks"}</h1>
+      <h1>
+  {role === "admin" || role === "role_admin"
+    ? "Tasks"
+    : "My Tasks"}
+</h1>
 
-      {role === "ADMIN" && (
+      {(role === "admin" || role === "role_admin") && (
         <form className="task-form" onSubmit={addTask}>
           <select
             name="assignedTo"
