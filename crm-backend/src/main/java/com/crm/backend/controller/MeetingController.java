@@ -85,26 +85,36 @@ public class MeetingController {
     }
 
     @PutMapping("/{id}")
-    public Meeting updateMeeting(
+    public ResponseEntity<?> updateMeeting(
             @PathVariable Long id,
-            @RequestBody Meeting meeting
-    ) {
+            @RequestBody Meeting meeting) {
 
-        Meeting updatedMeeting =
-                service.updateMeeting(id, meeting);
+        try {
 
-        String[] emailList =
-                meeting.getEmails().split(",");
+            Meeting updatedMeeting =
+                    service.updateMeeting(id, meeting);
 
-        emailService.sendUpdateMail(
-                emailList,
-                meeting.getTitle(),
-                meeting.getMeetingDate(),
-                meeting.getMeetingTime(),
-                meeting.getLocation()
-        );
+            String[] emailList =
+                    meeting.getEmails().split(",");
 
-        return updatedMeeting;
+            emailService.sendUpdateMail(
+                    emailList,
+                    meeting.getTitle(),
+                    meeting.getMeetingDate(),
+                    meeting.getMeetingTime(),
+                    meeting.getLocation()
+            );
+
+            return ResponseEntity.ok(updatedMeeting);
+
+        } catch(Exception e) {
+
+            e.printStackTrace();
+
+            return ResponseEntity
+                    .status(500)
+                    .body(e.getMessage());
+        }
     }
 
     @PutMapping("/cancel/{id}")
@@ -128,7 +138,7 @@ public class MeetingController {
 
         meeting.setStatus("Cancelled");
 
-        service.updateMeeting(id, meeting);
+        service.saveMeeting(meeting);
 
         return ResponseEntity.ok("Meeting Cancelled");
     }

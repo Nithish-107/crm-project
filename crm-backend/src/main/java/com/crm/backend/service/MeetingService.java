@@ -61,6 +61,10 @@ public class MeetingService {
                     updatedMeeting.getLocation()
             );
 
+            meeting.setStatus(
+                    updatedMeeting.getStatus()
+            );
+
             return repository.save(meeting);
         }
 
