@@ -30,7 +30,7 @@ function Meetings() {
 
       const response =
         await axios.get(
-          "https://crm-project-kizo.onrender.com/meetings"
+          "http://localhost:8080/meetings"
         );
 
          console.log("MEETINGS:", response.data);
@@ -77,7 +77,7 @@ function Meetings() {
 
         await axios.put(
 
-          `https://crm-project-kizo.onrender.com/meetings/${formData.id}`,
+          `http://localhost:8080/meetings/${formData.id}`,
 
           formData
         );
@@ -85,7 +85,7 @@ function Meetings() {
       } else {
 
           const response = await axios.post(
-  "https://crm-project-kizo.onrender.com/meetings",
+  "http://localhost:8080/meetings",
   formData
 );
 
@@ -119,7 +119,7 @@ setMeetings([
     try {
 
       await axios.delete(
-        `https://crm-project-kizo.onrender.com/meetings/${id}`
+        `http://localhost:8080/meetings/${id}`
       );
 
       await fetchMeetings();
@@ -142,6 +142,24 @@ setMeetings([
       location: meeting.location
     });
   };
+
+  const cancelMeeting = async (id) => {
+
+  try {
+
+    await axios.put(
+      `http://localhost:8080/meetings/cancel/${id}`
+    );
+
+    fetchMeetings();
+
+    alert("Meeting Cancelled");
+
+  } catch(error) {
+
+    console.log(error);
+  }
+};
 
 
 
@@ -232,7 +250,6 @@ const filteredMeetings = meetings.filter((meeting) => {
               name="meetingDate"
               value={formData.meetingDate}
               onChange={handleChange}
-              required
             />
 
             <input
@@ -240,7 +257,6 @@ const filteredMeetings = meetings.filter((meeting) => {
               name="meetingTime"
               value={formData.meetingTime}
               onChange={handleChange}
-              required
             />
 
             <input
@@ -329,6 +345,13 @@ const filteredMeetings = meetings.filter((meeting) => {
                     >
                       Delete
                     </button>
+
+                    <button
+  className="cancel-btn"
+  onClick={() => cancelMeeting(meeting.id)}
+>
+  Cancel
+</button>
 
                   </td>
 
