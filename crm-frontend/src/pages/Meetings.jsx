@@ -30,7 +30,7 @@ function Meetings() {
 
       const response =
         await axios.get(
-          "http://localhost:8080/meetings"
+          "https://crm-project-kizo.onrender.com/meetings"
         );
 
          console.log("MEETINGS:", response.data);
@@ -77,7 +77,7 @@ function Meetings() {
 
         await axios.put(
 
-          `http://localhost:8080/meetings/${formData.id}`,
+          `https://crm-project-kizo.onrender.com/meetings/${formData.id}`,
 
           formData
         );
@@ -85,7 +85,7 @@ function Meetings() {
       } else {
 
           const response = await axios.post(
-  "http://localhost:8080/meetings",
+  "https://crm-project-kizo.onrender.com/meetings",
   formData
 );
 
@@ -119,7 +119,7 @@ setMeetings([
     try {
 
       await axios.delete(
-        `http://localhost:8080/meetings/${id}`
+        `https://crm-project-kizo.onrender.com/meetings/${id}`
       );
 
       await fetchMeetings();
@@ -148,7 +148,7 @@ setMeetings([
   try {
 
     await axios.put(
-      `http://localhost:8080/meetings/cancel/${id}`
+      `https://crm-project-kizo.onrender.com/meetings/cancel/${id}`
     );
 
     fetchMeetings();
