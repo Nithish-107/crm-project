@@ -304,7 +304,9 @@ const filteredMeetings = meetings.filter((meeting) => {
               <th>Time</th>
               <th>Emails</th>
               <th>Location</th>
+              <th>Status</th>
               <th>Actions</th>
+              
 
             </tr>
 
@@ -326,6 +328,7 @@ const filteredMeetings = meetings.filter((meeting) => {
                   <td>{meeting.emails}</td>
 
                   <td>{meeting.location}</td>
+                  <td>{meeting.status || "Active"}</td>
 
                   <td>
 
