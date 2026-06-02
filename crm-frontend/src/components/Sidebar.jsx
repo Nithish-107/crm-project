@@ -14,7 +14,11 @@ import {
 import "../css/Sidebar.css";
 
 function Sidebar() {
-  const role = localStorage.getItem("role");
+  const role =
+  localStorage.getItem("role")
+    ?.trim()
+    .toLowerCase();
+    console.log("ROLE =", role);
 
   return (
     <div className="sidebar">
@@ -34,7 +38,7 @@ function Sidebar() {
       <div className="sidebar-section">
         <p className="sidebar-title">SALES</p>
 
-        {role === "ADMIN" && (
+        {(role === "admin" || role === "role_admin") && (
           <>
             <Link to="/customers">
               <Users size={18} />
@@ -72,7 +76,7 @@ function Sidebar() {
           </>
         )}
 
-        {role === "USER" && (
+        {(role === "user" || role === "role_user") && (
           <>
             <Link to="/leads">
               <UserPlus size={18} />
