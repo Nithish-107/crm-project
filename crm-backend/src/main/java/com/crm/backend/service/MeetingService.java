@@ -66,4 +66,10 @@ public class MeetingService {
 
         return null;
     }
+
+    public Meeting getMeetingById(Long id) {
+
+        return repository.findById(id)
+                .orElseThrow();
+    }
 }
