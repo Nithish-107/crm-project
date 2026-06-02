@@ -7,7 +7,7 @@ function Leads() {
 
   const [users, setUsers] = useState([]);
 
-  const role = localStorage.getItem("role");
+  const role = localStorage.getItem("role")?.trim().toLowerCase();
 
   const userName = localStorage.getItem("userName");
 
@@ -26,15 +26,15 @@ function Leads() {
     fetchUsers();
   }, []);
 
- 
   const fetchLeads = async () => {
     try {
-      const response = await axios.get("https://crm-project-kizo.onrender.com/leads");
+      const response = await axios.get(
+        "https://crm-project-kizo.onrender.com/leads",
+      );
 
-      if (role === "ADMIN") {
+      if (role === "admin" || role === "role_admin") {
         setLeads(response.data);
       } else {
-  
         const filteredLeads = response.data.filter(
           (lead) => lead.assignedTo === userName,
         );
@@ -46,10 +46,11 @@ function Leads() {
     }
   };
 
-
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("https://crm-project-kizo.onrender.com/users");
+      const response = await axios.get(
+        "https://crm-project-kizo.onrender.com/users",
+      );
 
       setUsers(response.data);
     } catch (error) {
@@ -65,48 +66,38 @@ function Leads() {
     });
   };
 
-
   const addLead = async (e) => {
-
     e.preventDefault();
 
-    if(
-        !formData.name ||
-        !formData.email ||
-        !formData.phone ||
-        !formData.source ||
-        !formData.assignedTo
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.phone ||
+      !formData.source ||
+      !formData.assignedTo
     ) {
+      alert("Please fill all fields");
 
-        alert("Please fill all fields");
-
-        return;
+      return;
     }
 
     try {
+      await axios.post("https://crm-project-kizo.onrender.com/leads", formData);
 
-        await axios.post(
-            "https://crm-project-kizo.onrender.com/leads",
-            formData
-        );
+      fetchLeads();
 
-
-        fetchLeads();
-
-        setFormData({
-            name: "",
-            email: "",
-            phone: "",
-            source: "",
-            status: "New",
-            assignedTo: ""
-        });
-
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        source: "",
+        status: "New",
+        assignedTo: "",
+      });
     } catch (error) {
-
-        console.log(error);
+      console.log(error);
     }
-};
+  };
 
   const deleteLead = async (id) => {
     try {
@@ -132,7 +123,9 @@ function Leads() {
 
   const convertLead = async (id) => {
     try {
-      await axios.post(`https://crm-project-kizo.onrender.com/leads/${id}/convert`);
+      await axios.post(
+        `https://crm-project-kizo.onrender.com/leads/${id}/convert`,
+      );
 
       alert("Lead Converted");
 
@@ -144,10 +137,11 @@ function Leads() {
 
   return (
     <div>
-      <h1>{role === "ADMIN" ? "Leads" : "My Leads"}</h1>
+      <h1>
+        {role === "admin" || role === "role_admin" ? "Leads" : "My Leads"}
+      </h1>
 
-
-      {role === "ADMIN" && (
+      {(role === "admin" || role === "role_admin") && (
         <form onSubmit={addLead}>
           <input
             type="text"
@@ -181,7 +175,6 @@ function Leads() {
             onChange={handleChange}
           />
 
-
           <select
             name="assignedTo"
             value={formData.assignedTo}
@@ -212,7 +205,7 @@ function Leads() {
             <th>Status</th>
             <th>Assigned To</th>
 
-            {role === "ADMIN" && (
+            {(role === "admin" || role === "role_admin") && (
               <>
                 <th>Convert</th>
                 <th>Actions</th>
@@ -251,13 +244,13 @@ function Leads() {
 
               <td>{lead.assignedTo}</td>
 
-              {role === "ADMIN" && (
+              {(role === "admin" || role === "role_admin") && (
                 <td>
                   <button onClick={() => convertLead(lead.id)}>Convert</button>
                 </td>
               )}
 
-              {role === "ADMIN" && (
+              {(role === "admin" || role === "role_admin") && (
                 <td>
                   <button onClick={() => deleteLead(lead.id)}>Delete</button>
                 </td>
